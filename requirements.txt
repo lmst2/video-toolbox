@@ -1,0 +1,8 @@
+colorama==0.4.3
+Flask==1.1.2
+Django==3.1
+viapi_utils==1.0.0
+ffmpy==0.2.3
+requests==2.24.0
+aliyun_python_sdk_videoenhan==1.0.2
+aliyun_python_sdk_core==2.13.25

@@ -16,6 +16,7 @@ server = api_server.get_server()
 
 tasks = {}
 
+
 def load_dir(_dir, video_name):
     video = os.path.join(_dir, video_name)
     temp_dir = os.path.join(_dir, f'{video_name.split(".")[0]}_temps')
