@@ -11,6 +11,8 @@ video-toolbox
 
 3. 进入项目，安装依赖：``pip install -r requirements.txt``
 
+4. 运行api server: ``python start_server.py``
+
 ### 文档
 
 #### api_server 的使用
