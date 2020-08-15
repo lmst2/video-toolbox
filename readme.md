@@ -12,6 +12,9 @@ video-toolbox
 3. 进入项目，安装依赖：``pip install -r requirements.txt``
 
 ### 文档
+
+#### api_server 的使用
+
 * erase video watermark
   * api: ``localhost:port/video/api/admin/v1.0/erase/logo``
   * method: `POST`
