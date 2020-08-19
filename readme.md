@@ -177,18 +177,18 @@ video-toolbox
 
 #### 视频水印
 
-![IMG_1228](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1228.PNG)
+![IMG_1228](https://i.loli.net/2020/08/19/eNiKL8jBAMfCZ63.png)
 
-![IMG_1229](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1229.PNG)
+![IMG_1229](https://i.loli.net/2020/08/19/I9vdJF71Po2uDVj.png)
 
-![IMG_1230](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1230.PNG)
+![IMG_1230](https://i.loli.net/2020/08/19/pEFKdXxOLHJvwMV.png)
 
-![IMG_1231](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1231.PNG)
+![IMG_1231](https://i.loli.net/2020/08/19/ZU8tXApcyVTNdKM.png)
 
 #### 视频台标擦除
 
-![IMG_1232](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1232.PNG)
+![IMG_1232](https://i.loli.net/2020/08/19/PaQBxEj7SKmsdVJ.png)
 
 #### 视频字幕擦除
 
-![IMG_1233](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1233.PNG)
+![IMG_1233](https://i.loli.net/2020/08/19/R6Ni5fHktlUgrXC.png)
