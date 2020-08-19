@@ -1,6 +1,18 @@
 # 视频工具箱
 video-toolbox
 
+[TOC]
+
+### 任务
+
+功能模块
+
+- [ ] 视频水印
+- [ ] 视频字幕擦除
+- [ ] 视频台标擦除
+- [ ] 。。。
+
+
 ### Quick Start
 
 1. 安装[Git](https://git-scm.com/)
@@ -160,3 +172,23 @@ video-toolbox
          ```
 
          
+
+
+
+#### 视频水印
+
+![IMG_1228](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1228.PNG)
+
+![IMG_1229](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1229.PNG)
+
+![IMG_1230](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1230.PNG)
+
+![IMG_1231](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1231.PNG)
+
+#### 视频台标擦除
+
+![IMG_1232](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1232.PNG)
+
+#### 视频字幕擦除
+
+![IMG_1233](C:\Users\wujia\Desktop\code\playground\readme.assets\IMG_1233.PNG)
