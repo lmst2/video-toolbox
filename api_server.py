@@ -8,16 +8,17 @@ from log import logger
 from flask import Flask, jsonify
 from flask import request
 from flask import abort
+from flask import render_template
 from functools import wraps
 from multiprocessing.pool import ApplyResult, ThreadPool
 
 
 class ApiServer:
-    flask = Flask(__name__)
 
-    def __init__(self, host, port):
+    def __init__(self, host, port, **options):
         self.host = host
         self.port = port
+        self.flask = Flask(__name__, **options)
 
     def run(self, debug=False, **options):
         self.flask.run(host=self.host, port=self.port, debug=debug, **options)
@@ -39,9 +40,9 @@ _server: Optional[ApiServer] = None
 loop = asyncio.get_event_loop()
 
 
-def init(host='localhost', port=5000):
+def init(host='localhost', port=5000, **options):
     global _server
-    _server = ApiServer(host, port)
+    _server = ApiServer(host, port, **options)
 
 
 def get_server():

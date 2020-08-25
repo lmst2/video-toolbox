@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* ————————————————————————初始化———————————————————————————— */
+
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        em,
+        i {
+            font-style: normal
+        }
+
+        li {
+            list-style: none
+        }
+
+        img {
+            border: 0;
+            vertical-align: middle
+        }
+
+        button {
+            cursor: pointer
+        }
+
+        a {
+            color: #666;
+            text-decoration: none
+        }
+
+        a:hover {
+            color: #c81623
+        }
+
+        button,
+        input {
+            font-family: Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            background-color: #fff;
+            font: 16px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+            color: #222
+        }
+
+        .hide,
+        .none {
+            display: none
+        }
+
+        .clearfix:after {
+            visibility: hidden;
+            clear: both;
+            display: block;
+            content: ".";
+            height: 0
+        }
+
+        .clearfix {
+            *zoom: 1
+        }
+
+        /* —————————————————————————我的css——————————————————————————— */
+
+        .w {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        span {
+            background: white;
+        }
+
+        ul > li > ul {
+            display: block;
+        }
+
+        input[type=checkbox] {
+            display: none;
+        }
+
+        ul li input[type=checkbox]:checked + ul {
+            display: none;
+        }
+
+        /* ————————————————————————头部区域———————————————————————————— */
+
+        header > :first-child {
+            background: #506c90;
+            height: 52px;
+        }
+
+        header > :first-child > div > img {
+            margin-top: 8px;
+        }
+
+        header > :nth-child(2) {
+            background: #e8ecf3;
+            height: 103px;
+        }
+
+        header > :nth-child(2) > h2 {
+            text-align: center;
+            line-height: 103px;
+            color: #667ca3;
+            font-weight: 400;
+        }
+
+        /* ————————————————————————内容区域———————————————————————————— */
+
+        .workspace {
+            width: 700px;
+            height: 350px;
+            border: 2px dashed;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            background-image: repeating-linear-gradient(30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 7px, transparent 0, transparent 14px);
+        }
+
+        .workspace > :first-child {
+            width: 250px;
+            height: 50px;
+            margin: 150px auto;
+        }
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+
+        .file input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+        }
+
+        .file:hover {
+            background: #AADFFD;
+            border-color: #78C3F3;
+            color: #004974;
+            text-decoration: none;
+        }
+
+        .upload {
+            width: 600px;
+            height: 30px;
+            margin: 30px auto;
+        }
+    </style>
+</head>
+
+<body>
+<!-- ————————————————————————头部区域———————————————————————————— -->
+<header>
+    <div>
+        <div class="w"><img src="images/header.png" alt=""></div>
+    </div>
+    <div>
+        <h2>视频工具箱</h2>
+    </div>
+</header>
+<!-- ————————————————————————内容区域———————————————————————————— -->
+
+<article>
+    <div class="workspace w">
+        <div>
+            <a style="float: left;" href="javascript:;" class="file">预览</a>
+            <a style="float: right;" href="javascript:;" class="file">下载</a>
+        </div>
+
+
+    </div>
+
+    <div class="upload w">
+        <span>水印文字：</span>
+        <input type="text" name="" id="">
+        <a href="javascript:;" class="a-upload">
+            <input type="file" name="" id="">上传
+        </a>
+    </div>
+</article>
+</body>
+
+</html>
