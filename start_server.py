@@ -13,4 +13,5 @@ api_server.load_plugins(
 )
 
 if __name__ == '__main__':
+    api_server.CORS(server, resources={r"/api/*": {"origins": "*"}})
     server.run(debug=True)

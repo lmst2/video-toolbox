@@ -6,3 +6,5 @@ ffmpy==0.2.3
 requests==2.24.0
 aliyun_python_sdk_videoenhan==1.0.2
 aliyun_python_sdk_core==2.13.25
+
+Werkzeug~=1.0.1

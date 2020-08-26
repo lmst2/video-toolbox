@@ -4,13 +4,14 @@ from plugins._aliyunUtils import *
 import api_server
 from api_server import abort
 from api_server import render_template
-from flask import request
-from werkzeug import secure_filename
+from api_server import request
+from api_server import jsonify
+from werkzeug.utils import secure_filename
 
 server = api_server.get_server()
-server.flask.config[
-    'UPLOAD_PATH'] = '/home/wujiachen2016/video-toolbox/static/videos'
-server.flask.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV']
+server.config[
+    'UPLOAD_PATH'] = r'C:\Users\wujia\Desktop\code\playground\static\videos'  # '/home/wujiachen2016/video-toolbox/static/videos'
+server.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV']
 
 
 def allowed_file(filename):
@@ -22,7 +23,7 @@ def allowed_file(filename):
 
     ext = filename.split('.', 1)[0]
 
-    if ext.upper() in server.flask.config['ALLOWED_EXTENSIONS']:
+    if ext.upper() in server.config['ALLOWED_EXTENSIONS']:
         return True
     else:
         return False
@@ -30,9 +31,11 @@ def allowed_file(filename):
 
 @server.route('/api/v1/upload', methods=['POST'])
 def upload():
-    files = request.files.values()
-    for file in files:
+    if request.files:
+        file = request.files['file']
+        print(file.filename)
         if allowed_file(file.filename):
             file.save(
-                os.path.join(server.flask.config['UPLOAD_PATH'],
+                os.path.join(server.config['UPLOAD_PATH'],
                              secure_filename(file.filename)))
+    return jsonify({'success': True})

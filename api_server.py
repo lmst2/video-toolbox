@@ -9,40 +9,48 @@ from flask import Flask, jsonify
 from flask import request
 from flask import abort
 from flask import render_template
+from flask_cors import CORS
+from flask_cors import cross_origin
 from functools import wraps
 from multiprocessing.pool import ApplyResult, ThreadPool
 
+# class ApiServer:
+#
+#     def __init__(self, host, port, **options):
+#         self.host = host
+#         self.port = port
+#         self.flask = Flask(__name__, **options)
+#
+#     def run(self, debug=False, **options):
+#         self.flask.run(host=self.host, port=self.port, debug=debug, **options)
+#
+#     def _get_flask(self):
+#         return self.flask
+#
+#     # route = deco(flask)
+#     # def route(self, rule, **options):
+#     #     def decorator(f):
+#     #         @self.flask.route(rule, **options)
+#     #         @wraps(f)
+#     #         def deco():
+#     #             return f()
+#     #
+#     #         return deco
+#     #
+#     #     return decorator
+#     route = _get_flask().route
+#
+#     def cors(self, **options):
+#         CORS(self.flask, **options)
 
-class ApiServer:
 
-    def __init__(self, host, port, **options):
-        self.host = host
-        self.port = port
-        self.flask = Flask(__name__, **options)
-
-    def run(self, debug=False, **options):
-        self.flask.run(host=self.host, port=self.port, debug=debug, **options)
-
-    # route = deco(flask)
-    def route(self, rule, **options):
-        def decorator(f):
-            @self.flask.route(rule, **options)
-            @wraps(f)
-            def deco():
-                return f()
-
-            return deco
-
-        return decorator
-
-
-_server: Optional[ApiServer] = None
+_server: Optional[Flask] = None
 loop = asyncio.get_event_loop()
 
 
-def init(host='localhost', port=5000, **options):
+def init(**options):
     global _server
-    _server = ApiServer(host, port, **options)
+    _server = Flask(__name__, **options)
 
 
 def get_server():
