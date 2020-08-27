@@ -37,6 +37,7 @@
             var data = JSON.parse(evt.target.responseText);
             if (data.success) {
                 alert("上传成功！");
+                console.log(data)
             } else {
                 alert("上传失败！");
             }
@@ -49,7 +50,7 @@
         }
 
         //取消上传
-        function cancleUploadFile() {
+        function cancelUploadFile() {
             xhr.abort();
         }
 
@@ -94,8 +95,8 @@
 <progress id="progressBar" value="0" max="100" style="width: 300px;"></progress>
 <span id="percentage"></span><span id="time"></span>
 <br/><br/>
-<input type="file" id="file" name="myfile"/>
+<input type="file" id="file" name="file"/>
 <input type="button" onclick="UploadFile()" value="上传"/>
-<input type="button" onclick="cancleUploadFile()" value="取消"/>
+<input type="button" onclick="cancelUploadFile()" value="取消"/>
 </body>
 </html>

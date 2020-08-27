@@ -1,4 +1,6 @@
+import hashlib
 import os
+import random
 
 from plugins._aliyunUtils import *
 import api_server
@@ -6,12 +8,13 @@ from api_server import abort
 from api_server import render_template
 from api_server import request
 from api_server import jsonify
-from werkzeug.utils import secure_filename
 
 server = api_server.get_server()
+
+upload_dir = os.path.abspath(r'..\static\videos')
 server.config[
-    'UPLOAD_PATH'] = r'C:\Users\wujia\Desktop\code\playground\static\videos'  # '/home/wujiachen2016/video-toolbox/static/videos'
-server.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV']
+    'UPLOAD_PATH'] = upload_dir  # '/home/wujiachen2016/video-toolbox/static/videos'
+server.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV', 'MOV']
 
 
 def allowed_file(filename):
@@ -21,7 +24,7 @@ def allowed_file(filename):
     if '.' not in filename:
         return False
 
-    ext = filename.split('.', 1)[0]
+    ext = filename.rsplit('.', 1)[1]
 
     if ext.upper() in server.config['ALLOWED_EXTENSIONS']:
         return True
@@ -33,9 +36,13 @@ def allowed_file(filename):
 def upload():
     if request.files:
         file = request.files['file']
-        print(file.filename)
         if allowed_file(file.filename):
+            filename = hashlib.md5(
+                file.filename.encode() +
+                bytes([random.randint(0, 256)])).hexdigest() + '.' \
+                       + file.filename.rsplit('.', 1)[1]
             file.save(
                 os.path.join(server.config['UPLOAD_PATH'],
-                             secure_filename(file.filename)))
-    return jsonify({'success': True})
+                             filename))
+            return jsonify({'success': True, 'filename': filename})
+    return jsonify({'success': False})

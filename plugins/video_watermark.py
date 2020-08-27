@@ -11,6 +11,7 @@ from api_server import logger
 from api_server import abort
 from api_server import request
 import api_server
+from plugins.file_manager import upload_dir
 
 server = api_server.get_server()
 
@@ -30,7 +31,7 @@ def load_dir(_dir, video_name):
 def extract_frames(video, temp_dir):
     ff = ffmpy.FFmpeg(
         inputs={video: None},
-        outputs={os.path.join(temp_dir, '%4d.jpg'): '-vsync 0'}
+        outputs={os.path.join(temp_dir, '%6d.jpg'): '-vsync 0'}
     )
     ff.run()
 
@@ -62,6 +63,33 @@ def add_watermark(orig, watermark, count=0):
         return add_watermark(orig, watermark, count)
 
 
+def extract_watermark(orig, watermarked, count=0):
+    try:
+        request = CommonRequest()
+        request.set_accept_format('json')
+        request.set_domain('imageenhan.cn-shanghai.aliyuncs.com')
+        request.set_method('POST')
+        request.set_protocol_type('https')  # https | http
+        request.set_version('2019-09-30')
+        request.set_action_name('ImageBlindCharacterWatermark')
+
+        request.add_query_param('RegionId', "cn-shanghai")
+        request.add_query_param('FunctionType', "decode_text")
+        request.add_query_param('QualityFactor', "90")
+        request.add_query_param('OriginImageURL', orig)
+        request.add_query_param('WatermarkImageURL', watermarked)
+        request.add_query_param('OutputFileType', "jpg")
+
+        response = client.do_action_with_exception(request)
+        dict_response = eval(str(response, encoding='utf-8'))
+        return dict_response['Data']['WatermarkImageURL']
+    except Exception as e:
+        if count > 100:
+            logger.warn(f'Image {orig} have failed {count} times retrying.')
+            logger.warn(e)
+        return add_watermark(orig, watermarked, count)
+
+
 def process_image(di, watermark, temp_dir, processed_dir):
     try:
         orig = get_url(os.path.join(temp_dir, di), "jpg")
@@ -82,7 +110,7 @@ def video_watermark():
     # loop.run_until_complete(main(json['dir'], json['video_name'], job_id, loop))
 
     async_result = api_server.apply_async(worker, (
-        json['dir'], json['video_name'], json['text']))
+        upload_dir, json['video_name'], json['text']))
     global tasks
     tasks[job_id] = async_result
     return api_server.jsonify({'Request_id': job_id})
@@ -104,10 +132,23 @@ def get_video_watermark_result():
         return api_server.jsonify({'Status': 'PROCESSING', 'Result': ''})
 
 
+@server.route('/video/api/admin/v1.0/add/watermark/preview', methods=['GET'])
+def get_video_watermark_preview():
+    json = request.json
+    ori = os.path.join(upload_dir,
+                       json['video_name'].rsplit('.', 1)[0] + '_temps')
+    pros = os.path.join(upload_dir,
+                        json['video_name'].rsplit('.', 1)[0] + '_processed')
+    wimg = process_image('000001.jpg', json['text'], ori, pros)
+    oimg = get_url(os.path.join(ori, '000001.jpg'), "jpg")
+    w = extract_watermark(oimg, wimg)
+    return api_server.jsonify({'watermark': w})
+
+
 def convert_to_video(base_dir, video_name, processed_dir, crf=8):
     watermarked_video_name = '_watermarked.'.join(video_name.split('.'))
     ff2 = ffmpy.FFmpeg(
-        inputs={os.path.join(processed_dir, '%4d.jpg'): '-r 23 -f image2'},
+        inputs={os.path.join(processed_dir, '%6d.jpg'): '-r 23 -f image2'},
         outputs={os.path.join(
             base_dir, watermarked_video_name):
                      f'-vcodec libx264 -crf {crf} -pix_fmt yuv420p'}
