@@ -46,3 +46,9 @@ def upload():
                              filename))
             return jsonify({'success': True, 'filename': filename})
     return jsonify({'success': False})
+
+
+@server.route('/api/v1/download/<path:filename>', methods=['GET'])
+def download(filename):
+    return api_server.send_from_directory(server.config['UPLOAD_PATH'],
+                                          filename)

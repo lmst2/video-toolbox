@@ -129,15 +129,9 @@
             background-image: repeating-linear-gradient(30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 7px, transparent 0, transparent 14px);
         }
 
-        .workspace > :first-child {
-            width: 100px;
-            height: 50px;
-            margin: 150px auto;
-        }
-
         .file {
             position: relative;
-            margin: 150px auto;
+            margin: 150px 300px;
             display: inline-block;
             background: #D0EEFF;
             border: 1px solid #99D3F5;
@@ -148,6 +142,7 @@
             text-decoration: none;
             text-indent: 0;
             line-height: 20px;
+            z-index: 10;
         }
 
         .file input {
@@ -163,6 +158,12 @@
             border-color: #78C3F3;
             color: #004974;
             text-decoration: none;
+        }
+
+        .img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .upload {
@@ -208,6 +209,8 @@
             var progressBar = document.getElementById("progressBar");
             var percentageDiv = document.getElementById("percentage");
             var fileUploader = document.getElementById("file");
+            var preview = document.getElementById("preview");
+            var download = document.getElementById("download");
             if (data.success) {
                 alert("上传成功！");
                 console.log(data);
@@ -221,6 +224,8 @@
                 fileUploader.style.display = "inline";
                 percentageDiv.innerHTML = '失败';
             }
+            preview.style.display = "none";
+            download.style.display = "none";
 
         }
 
@@ -239,15 +244,62 @@
             var text = document.getElementById("text").value;
             if (text.replace(/(^s*)|(s*$)/g, "").length == 0) {
                 alert("请输入水印文字！")
-            } else {
+            } else if (fname) {
                 var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
                 var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark";
-                xmlhttp.open("POST", theUrl);
+                xmlhttp.open("POST", theUrl, true);
                 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 xmlhttp.send(JSON.stringify({
                     "video_name": fname,
                     "text": text
                 }));
+                var res = JSON.parse(xmlhttp.responseText);
+                var down = document.getElementById("download");
+                down.innerHTML = "处理中"
+                down.style.display = "block"
+                previewIMG();
+                checkResult(res);
+            } else {
+                alert('请先上传文件!');
+            }
+        }
+
+        function checkResult(data) {
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+            var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark";
+            xmlhttp.open("GET", theUrl, true);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify({"Request_id": data.Request_id}));
+            var res = JSON.parse(xmlhttp.responseText);
+            var flag = true;
+            while (flag) {
+                if (res.Status == "PROCESS_SUCCESS") {
+                    var download = document.getElementById("download");
+                    var downAPI = "http://localhost:5000/api/download/";
+                    download.href = downAPI + res.Result.video_name;
+                    download.innerHTML = "下载视频";
+                    download.style.display = "block";
+                    flag = false;
+                } else if (res.Status == "PROCESS_FAILED") {
+                    download.innerHTML = "处理失败: " + res.ErrorMessage;
+                    download.style.display = "block";
+                    flag = false;
+                }
+            }
+        }
+
+
+        function previewIMG() {
+            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+            var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark/preview";
+            xmlhttp.open("GET", theUrl, true);
+            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xmlhttp.send(JSON.stringify({"video_name": fname}));
+            var res = JSON.parse(xmlhttp.responseText);
+            if (res.success) {
+                var preview = document.getElementById("preview");
+                preview.src = res.watermark
+                preview.style.display = "block";
             }
         }
 
@@ -308,8 +360,8 @@
 
 <article>
     <div class="workspace w">
-        <span class="img" id="preview"></span>
-        <span class="file">下载视频</span>
+        <img src="" class="img" id="preview" style="display: none;"></img>
+        <a class="file" id="download" style="display: none;"></a>
 
 
     </div>

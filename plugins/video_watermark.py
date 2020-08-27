@@ -135,15 +135,19 @@ def get_video_watermark_result():
 @server.route('/video/api/admin/v1.0/add/watermark/preview', methods=['GET'])
 def get_video_watermark_preview():
     json = request.json
-    ori = os.path.join(upload_dir,
-                       json['video_name'].rsplit('.', 1)[0] + '_temps')
-    pros = os.path.join(upload_dir,
-                        json['video_name'].rsplit('.', 1)[0] + '_processed')
-    process_image('000001.jpg', json['text'], ori, pros)
-    wimg = get_url(os.path.join(pros, '000001.jpg'), "jpg")
-    oimg = get_url(os.path.join(ori, '000001.jpg'), "jpg")
-    w = extract_watermark(oimg, wimg)
-    return api_server.jsonify({'watermark': w})
+    if os.path.exists(
+            os.path.join(server.config['UPLOAD_PATH'], json['video_name'])):
+        ori = os.path.join(upload_dir,
+                           json['video_name'].rsplit('.', 1)[0] + '_temps')
+        pros = os.path.join(upload_dir,
+                            json['video_name'].rsplit('.', 1)[0] + '_processed')
+        process_image('000001.jpg', json['text'], ori, pros)
+        wimg = get_url(os.path.join(pros, '000001.jpg'), "jpg")
+        oimg = get_url(os.path.join(ori, '000001.jpg'), "jpg")
+        w = extract_watermark(oimg, wimg)
+        return api_server.jsonify({'watermark': w, 'success': True})
+    else:
+        return api_server.jsonify({'watermark': '', 'success': False})
 
 
 def convert_to_video(base_dir, video_name, processed_dir, crf=8):
