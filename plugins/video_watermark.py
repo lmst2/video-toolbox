@@ -139,7 +139,8 @@ def get_video_watermark_preview():
                        json['video_name'].rsplit('.', 1)[0] + '_temps')
     pros = os.path.join(upload_dir,
                         json['video_name'].rsplit('.', 1)[0] + '_processed')
-    wimg = process_image('000001.jpg', json['text'], ori, pros)
+    process_image('000001.jpg', json['text'], ori, pros)
+    wimg = get_url(os.path.join(pros, '000001.jpg'), "jpg")
     oimg = get_url(os.path.join(ori, '000001.jpg'), "jpg")
     w = extract_watermark(oimg, wimg)
     return api_server.jsonify({'watermark': w})
