@@ -18,7 +18,7 @@ aliyun_python_sdk_objectdet
 aliyun_python_sdk_imageprocess
 aliyun_python_sdk_imgsearch
 aliyun_python_sdk_videorecog
-aliyun_python_sdk_videoenhan
+
 aliyun_python_sdk_videoseg
 Werkzeug~=1.0.1
 oss2
