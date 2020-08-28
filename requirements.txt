@@ -22,4 +22,4 @@ aliyun_python_sdk_videoenhan
 aliyun_python_sdk_videoseg
 Werkzeug~=1.0.1
 oss2
-aliyun-python-sdk-viapiutils
+aliyun_python_sdk_viapiutils
