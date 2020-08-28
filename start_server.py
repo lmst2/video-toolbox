@@ -16,5 +16,5 @@ api_server.load_plugins(
 
 if __name__ == '__main__':
     api_server.CORS(server, resources={r"/api/*": {"origins": "*"}})
-    server.run(debug=True)
+    server.run(host='0.0.0.0', debug=True)
     server.logger.setLevel(logging.DEBUG)
