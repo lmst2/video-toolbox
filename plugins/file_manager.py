@@ -11,8 +11,8 @@ from api_server import jsonify
 
 server = api_server.get_server()
 
-upload_dir = os.path.abspath(r'static\videos')
-img_dir = os.path.abspath(r'static\images')
+upload_dir = os.path.abspath(r'static/videos')
+img_dir = os.path.abspath(r'static/images')
 server.config[
     'UPLOAD_PATH'] = upload_dir  # '/home/wujiachen2016/video-toolbox/static/videos'
 server.config['IMG_PATH'] = img_dir
