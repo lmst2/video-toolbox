@@ -12,8 +12,10 @@ from api_server import jsonify
 server = api_server.get_server()
 
 upload_dir = os.path.abspath(r'static\videos')
+img_dir = os.path.abspath(r'static\images')
 server.config[
     'UPLOAD_PATH'] = upload_dir  # '/home/wujiachen2016/video-toolbox/static/videos'
+server.config['IMG_PATH'] = img_dir
 server.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV', 'MOV']
 
 
@@ -52,3 +54,9 @@ def upload():
 def download_file(filename):
     return api_server.send_from_directory(server.config['UPLOAD_PATH'],
                                           filename)
+
+
+@server.route('/api/images/<path:image>', methods=['GET'])
+def images(image):
+    return api_server.send_from_directory(server.config['IMG_PATH'],
+                                          image)
