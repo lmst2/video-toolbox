@@ -1,3 +1,5 @@
+import logging
+
 import api_server
 from os import path
 from flask import Flask, jsonify
@@ -15,3 +17,4 @@ api_server.load_plugins(
 if __name__ == '__main__':
     api_server.CORS(server, resources={r"/api/*": {"origins": "*"}})
     server.run(debug=True)
+    server.logger.setLevel(logging.DEBUG)

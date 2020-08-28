@@ -39,7 +39,7 @@ video-toolbox
 #### api_server 的使用
 
 * erase video watermark
-  * api: ``localhost:port/video/api/admin/v1.0/erase/logo``
+  * api: ``localhost:port/api/video/admin/v1.0/erase/logo``
   * method: `POST`
   * body: `json`
     * ```json
@@ -69,7 +69,7 @@ video-toolbox
       ```
 
 * erase video subtitle
-  * api: ``localhost:port/video/api/admin/v1.0/erase/subtitle``
+  * api: ``localhost:port/api/video/admin/v1.0/erase/subtitle``
   * method: `POST`
   * body: `json`
     * ```json
@@ -91,7 +91,7 @@ video-toolbox
       ```
   
 * get async job result
-  * api: ``localhost:port/video/api/admin/v1.0/job/status``
+  * api: ``localhost:port/api/video/admin/v1.0/job/status``
   * method: `POST`
   * body: `json`
     * ```json
@@ -131,7 +131,7 @@ video-toolbox
        ```
 
 * video watermark
-  * api: ``localhost:port/video/api/admin/v1.0/add/watermark``
+  * api: ``localhost:port/api/video/admin/v1.0/add/watermark``
   * send request
     * method:  `POST`:
     * body: `json`

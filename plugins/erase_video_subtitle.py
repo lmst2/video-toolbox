@@ -20,7 +20,7 @@ def erase_subtitle_helper(video, box):
     return dict_response['RequestId']
 
 
-@server.route('/video/api/admin/v1.0/erase/subtitle', methods=['POST'])
+@server.route('/api/video/admin/v1.0/erase/subtitle', methods=['POST'])
 def erase_subtitle():
     if not api_server.request.json or 'video' not in api_server.request.json:
         abort(400)

@@ -30,7 +30,7 @@ def erase_video_logo_helper(video, boxess):
     return get_async_job_result(request_id)"""
 
 
-@server.route('/video/api/admin/v1.0/erase/logo', methods=['POST'])
+@server.route('/api/video/admin/v1.0/erase/logo', methods=['POST'])
 def erase_video_logo():
     if not api_server.request.json or 'video' not in api_server.request.json:
         abort(400)

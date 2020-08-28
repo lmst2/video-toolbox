@@ -246,19 +246,28 @@
                 alert("请输入水印文字！")
             } else if (fname) {
                 var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-                var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark";
+                var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark";
                 xmlhttp.open("POST", theUrl, true);
                 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                console.log(JSON.stringify({
+                    "video_name": fname,
+                    "text": text
+                }));
+                xmlhttp.onload = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var res = JSON.parse(this.responseText);
+                        var down = document.getElementById("download");
+                        down.innerHTML = "处理中";
+                        down.style.display = "block";
+                        console.log(res)
+                        previewIMG();
+                        checkResult(res);
+                    }
+                }
                 xmlhttp.send(JSON.stringify({
                     "video_name": fname,
                     "text": text
                 }));
-                var res = JSON.parse(xmlhttp.responseText);
-                var down = document.getElementById("download");
-                down.innerHTML = "处理中"
-                down.style.display = "block"
-                previewIMG();
-                checkResult(res);
             } else {
                 alert('请先上传文件!');
             }
@@ -266,41 +275,48 @@
 
         function checkResult(data) {
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-            var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark";
+            var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark/" + data.Request_id;
             xmlhttp.open("GET", theUrl, true);
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xmlhttp.send(JSON.stringify({"Request_id": data.Request_id}));
-            var res = JSON.parse(xmlhttp.responseText);
-            var flag = true;
-            while (flag) {
-                if (res.Status == "PROCESS_SUCCESS") {
-                    var download = document.getElementById("download");
-                    var downAPI = "http://localhost:5000/api/download/";
-                    download.href = downAPI + res.Result.video_name;
-                    download.innerHTML = "下载视频";
-                    download.style.display = "block";
-                    flag = false;
-                } else if (res.Status == "PROCESS_FAILED") {
-                    download.innerHTML = "处理失败: " + res.ErrorMessage;
-                    download.style.display = "block";
-                    flag = false;
+            xmlhttp.onload = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var res = JSON.parse(this.responseText);
+                    console.log(res)
+                    if (res.Status == "PROCESS_SUCCESS") {
+                        var download = document.getElementById("download");
+                        var downAPI = "http://localhost:5000/api/v1/download/";
+                        download.href = downAPI + res.Result.video_name;
+                        download.innerHTML = "下载视频";
+                        download.style.display = "block";
+                        flag = false;
+                    } else if (res.Status == "PROCESS_FAILED") {
+                        download.innerHTML = "处理失败: " + res.ErrorMessage;
+                        download.style.display = "block";
+                        flag = false;
+                    } else {
+                        setTimeout(checkResult, 20000, data);
+                    }
                 }
             }
+            xmlhttp.send(null);
         }
 
 
         function previewIMG() {
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-            var theUrl = "http://localhost:5000/video/api/admin/v1.0/add/watermark/preview";
+            var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark/preview/" + fname;
             xmlhttp.open("GET", theUrl, true);
-            xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xmlhttp.send(JSON.stringify({"video_name": fname}));
-            var res = JSON.parse(xmlhttp.responseText);
-            if (res.success) {
-                var preview = document.getElementById("preview");
-                preview.src = res.watermark
-                preview.style.display = "block";
+            xmlhttp.onload = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var res = JSON.parse(this.responseText);
+                    console.log(res)
+                    if (res.success) {
+                        var preview = document.getElementById("preview");
+                        preview.src = res.watermark
+                        preview.style.display = "block";
+                    }
+                }
             }
+            xmlhttp.send(null);
         }
 
 
@@ -360,8 +376,9 @@
 
 <article>
     <div class="workspace w">
-        <img src="" class="img" id="preview" style="display: none;"></img>
-        <a class="file" id="download" style="display: none;"></a>
+        <img src="http://algo-app-aic-vd-cn-shanghai-prod.oss-cn-shanghai.aliyuncs.com/image-blind-watermark/2020-08-27-19-51/17d663d7-1368-43b6-8fba-86ee107c2ce2_yzggskjh.jpg?Expires=1598559713&OSSAccessKeyId=LTAI4FoLmvQ9urWXgSRpDvh1&Signature=7G%2Fz5vwRSuRX2%2BHqXka14wXZkbo%3D"
+             class="img" id="preview" style="display: inline;"></img>
+        <a class="file" id="download" style="display: inline-block;"></a>
 
 
     </div>
