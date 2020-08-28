@@ -481,16 +481,16 @@
 						var downAPI = "http://34.92.52.134:5000/api/v1/download/";
 						download.href = downAPI + res.Result.video_name;
 						download.innerHTML = "下载视频";
-                        downBox.style.display = "block";
-                        flag = false;
-                    } else if (res.Status == "PROCESS_FAILED") {
-                        download.innerHTML = "处理失败: " + res.ErrorMessage;
-                        downBox.style.display = "block";
-                        flag = false;
-                    } else {
-                        setTimeout(checkResult, 20000, data);
-                    }
-                }
+						downBox.style.display = "block";
+						flag = false;
+					} else if (res.Status == "PROCESS_FAILED") {
+						download.innerHTML = "处理失败: " + res.ErrorMessage;
+						downBox.style.display = "block";
+						flag = false;
+					} else {
+						setTimeout(checkResult, 20000, data);
+					}
+				}
             }
             xmlhttp.send(null);
         }
@@ -524,16 +524,16 @@
             // event.total是需要传输的总字节，event.loaded是已经传输的字节。如果event.lengthComputable不为真，则event.total等于0
             progressBar.style.display = "inline";
             fileUploader.style.display = "none";
-            if (evt.lengthComputable) {//
-                progressBar.max = evt.total;
-                progressBar.value = evt.loaded;
-                percentageDiv.innerHTML = Math.round(evt.loaded / evt.total * 100) + "%";
-            }
-            // var time = document.getElementById("time");
-            // var nt = new Date().getTime();//获取当前时间
-            // var pertime = (nt - ot) / 1000; //计算出上次调用该方法时到现在的时间差，单位为s
-            // ot = new Date().getTime(); //重新赋值时间，用于下次计算
-            // var perload = evt.loaded - oloaded; //计算该分段上传的文件大小，单位b
+			if (evt.lengthComputable) {//
+				progressBar.max = evt.total;
+				progressBar.value = evt.loaded;
+				percentageDiv.innerHTML = Math.round(evt.loaded / evt.total * 100) + "%";
+			}
+			// var time = document.getElementById("time");
+			// var nt = new Date().getTime();//获取当前时间
+			// var pertime = (nt - ot) / 1000; //计算出上次调用该方法时到现在的时间差，单位为s
+			// ot = new Date().getTime(); //重新赋值时间，用于下次计算
+			// var perload = evt.loaded - oloaded; //计算该分段上传的文件大小，单位b
 			// oloaded = evt.loaded;//重新赋值已上传文件大小，用以下次计算
 			// //上传速度计算
 			// var speed = perload / pertime;//单位b/s
