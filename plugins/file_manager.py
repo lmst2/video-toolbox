@@ -58,5 +58,6 @@ def download_file(filename):
 
 @server.route('/api/images/<path:image>', methods=['GET'])
 def images(image):
+    print(server.config['IMG_PATH'], image)
     return api_server.send_from_directory(server.config['IMG_PATH'],
                                           image)
