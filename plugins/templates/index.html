@@ -19,20 +19,20 @@
 
 		body {
 			-webkit-font-smoothing: antialiased;
-            background-color: #fff;
-            font: 16px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
-            color: #222
-        }
+			background-color: #fff;
+			font: 16px/1.5 Microsoft YaHei, Heiti SC, tahoma, arial, Hiragino Sans GB, "\5B8B\4F53", sans-serif;
+			color: #222
+		}
 
-        a {
-            color: #666;
-            text-decoration: none;
-            transition: all 0.3s
-        }
+		a {
+			color: #666;
+			text-decoration: none;
+			transition: all 0.3s
+		}
 
-        a:hover {
-            color: #c81623;
-            transition: all 0.3s
+		a:hover {
+			color: #c81623;
+			transition: all 0.3s
 		}
 
 		.content {
@@ -159,7 +159,6 @@
 				left: -1000%;
 			}
 		}
-
 		@keyframes two_move_out {
 			from {
 				position: absolute;
@@ -172,7 +171,6 @@
 				left: -1000%;
 			}
 		}
-
 		@keyframes three_move_out {
 			from {
 				position: absolute;
@@ -185,7 +183,6 @@
 				left: -1000%;
 			}
 		}
-
 		@keyframes four_move_out {
 			from {
 				position: absolute;
@@ -198,7 +195,6 @@
 				top: 280px;
 			}
 		}
-
 		@keyframes five_move_out {
 			from {
 				position: absolute;
@@ -211,7 +207,6 @@
 				top: 280px;
 			}
 		}
-
 		@keyframes six_move_out {
 			from {
 				position: absolute;
@@ -304,12 +299,12 @@
 			background-image: repeating-linear-gradient(30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 7px, transparent 0, transparent 14px);
 		}
 
-        .file {
-            position: relative;
-            margin: 150px 300px;
-            display: inline-block;
-            background: #D0EEFF;
-            border: 1px solid #99D3F5;
+		.file {
+			position: relative;
+			margin: 150px 300px;
+			display: inline-block;
+			background: #D0EEFF;
+			border: 1px solid #99D3F5;
 			border-radius: 4px;
 			padding: 4px 12px;
 			overflow: hidden;
@@ -367,7 +362,7 @@
 			height: 30px;
 			margin: 20px auto;
 		}
-    </style>
+	</style>
     <script type="text/javascript">
         //图片上传
         var xhr;
@@ -387,13 +382,13 @@
 			xhr.onerror = uploadFailed; //请求失败
 
 			xhr.upload.onprogress = progressFunction;//【上传进度调用方法实现】
-            xhr.upload.onloadstart = function () {//上传开始执行方法
-                ot = new Date().getTime();   //设置上传开始时间
-                oloaded = 0;//设置上传开始时，以上传的文件大小为0
-            };
+			xhr.upload.onloadstart = function () {//上传开始执行方法
+				ot = new Date().getTime();   //设置上传开始时间
+				oloaded = 0;//设置上传开始时，以上传的文件大小为0
+			};
 
-            xhr.send(form); //开始上传，发送form数据
-        }
+			xhr.send(form); //开始上传，发送form数据
+		}
 
         //上传成功响应
         function uploadComplete(evt) {
@@ -473,19 +468,19 @@
         }
 
         function checkResult(data) {
-            var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+			var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
 			var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/add/watermark/" + data.Request_id;
 			var download = document.getElementById("download");
-            var downBox = document.getElementById("downBox");
-            xmlhttp.open("GET", theUrl, true);
-            xmlhttp.onload = function () {
-                if (this.readyState == 4 && this.status == 200) {
-                    var res = JSON.parse(this.responseText);
-                    console.log(res)
-                    if (res.Status == "PROCESS_SUCCESS") {
+			var downBox = document.getElementById("downBox");
+			xmlhttp.open("GET", theUrl, true);
+			xmlhttp.onload = function () {
+				if (this.readyState == 4 && this.status == 200) {
+					var res = JSON.parse(this.responseText);
+					console.log(res)
+					if (res.Status == "PROCESS_SUCCESS") {
 						var downAPI = "http://34.92.52.134:5000/api/v1/download/";
-                        download.href = downAPI + res.Result.video_name;
-                        download.innerHTML = "下载视频";
+						download.href = downAPI + res.Result.video_name;
+						download.innerHTML = "下载视频";
                         downBox.style.display = "block";
                         flag = false;
                     } else if (res.Status == "PROCESS_FAILED") {
@@ -539,16 +534,16 @@
             // var pertime = (nt - ot) / 1000; //计算出上次调用该方法时到现在的时间差，单位为s
             // ot = new Date().getTime(); //重新赋值时间，用于下次计算
             // var perload = evt.loaded - oloaded; //计算该分段上传的文件大小，单位b
-            // oloaded = evt.loaded;//重新赋值已上传文件大小，用以下次计算
-            // //上传速度计算
-            // var speed = perload / pertime;//单位b/s
-            // var bspeed = speed;
-            // var units = 'b/s';//单位名称
-            // if (speed / 1024 > 1) {
-            //     speed = speed / 1024;
-            //     units = 'k/s';
-            // }
-            // if (speed / 1024 > 1) {
+			// oloaded = evt.loaded;//重新赋值已上传文件大小，用以下次计算
+			// //上传速度计算
+			// var speed = perload / pertime;//单位b/s
+			// var bspeed = speed;
+			// var units = 'b/s';//单位名称
+			// if (speed / 1024 > 1) {
+			//     speed = speed / 1024;
+			//     units = 'k/s';
+			// }
+			// if (speed / 1024 > 1) {
 			//     speed = speed / 1024;
 			//     units = 'M/s';
 			// }
