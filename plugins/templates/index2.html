@@ -11,7 +11,6 @@
             margin: 0;
             padding: 0
         }
-
         img {
             border: 0;
             vertical-align: middle
@@ -40,41 +39,24 @@
             margin: 0 auto;
             width: 1000px;
             height: 900px;
-            /* border: 1px solid #ff0000; */
         }
 
         .content > div {
-
+            float: left;
             width: 300px;
             height: 250px;
-            margin: 20px 16.6px 10px 16.6px;
+            margin: 20px 0 10px 10px;
             box-sizing: border-box;
             padding: 30px;
             border-radius: 20px;
             transition: all 0.4s;
         }
 
-        .content > div:nth-child(n-4) {
-            float: left;
-
-        }
-
-        .content > div:nth-child(n+4) {
-            float: right;
-            top: 280px;
-        }
-
-
         .content > div:hover {
             box-shadow: 0px 20px 50px -14px rgba(0, 0, 0, 0.2);
             transform: translateY(-2px);
         }
 
-        #uploadF > div > button:hover {
-            box-shadow: 0px 20px 50px -14px rgba(0, 0, 0, 0.2);
-            transform: translateY(-1px);
-
-        }
 
         .content > div > .img {
             width: 120px;
@@ -96,18 +78,12 @@
 
         }
 
-        /* .one_in{
-            animation: one_move_out 1s cubic-bezier(0.4, 0, 1, 1) reverse forwards ;
-        } */
         .two_out {
             /* position:absolute; */
             animation: two_move_out 1s cubic-bezier(0.4, 0, 1, 1) forwards;
             /* animation-delay: 0.8s; */
         }
 
-        /* .two_in{
-            animation: two_move_out 0.1s cubic-bezier(0.4, 0, 1, 1) reverse forwards ;
-        } */
         .three_out {
             /* position:absolute; */
             animation: three_move_out 1s cubic-bezier(0.4, 0, 1, 1) forwards;
@@ -115,43 +91,29 @@
 
         }
 
-        /* .three_in{
-            animation: three_move_out 0.1s cubic-bezier(0.4, 0, 1, 1) reverse forwards ;
-        } */
         .four_out {
             /* position:absolute; */
             animation: four_move_out 1s cubic-bezier(0.4, 0, 1, 1) forwards;
             /* animation-delay: 0.8s; */
         }
 
-        /* .four_in{
-            animation: four_move_out 0.1s cubic-bezier(0.4, 0, 1, 1) reverse forwards;
-        } */
         .five_out {
             /* position:absolute; */
             animation: five_move_out 1s cubic-bezier(0.4, 0, 1, 1) forwards;
             /* animation-delay: 0.8s; */
         }
 
-        /* .five_in{
-            animation: five_move_out 0.1s cubic-bezier(0.4, 0, 1, 1) reverse forwards;
-        } */
         .six_out {
             /* position:absolute; */
             animation: six_move_out 1s cubic-bezier(0.4, 0, 1, 1) forwards;
             /* animation-delay: 0.8s; */
         }
 
-        /* .six_in{
-            animation: six_move_out 0.1s cubic-bezier(0.4, 0, 1, 1) reverse forwards;
-        } */
-
         @keyframes one_move_out {
             from {
 
                 position: absolute;
-                top: 20px;
-                left: 16px;
+                left: 10px;
 
             }
             to {
@@ -163,8 +125,7 @@
         @keyframes two_move_out {
             from {
                 position: absolute;
-                top: 20px;
-                left: 332px;
+                left: 330px;
 
             }
             to {
@@ -176,8 +137,7 @@
         @keyframes three_move_out {
             from {
                 position: absolute;
-                top: 20px;
-                left: 664px;
+                left: 650px;
 
             }
             to {
@@ -189,7 +149,7 @@
         @keyframes four_move_out {
             from {
                 position: absolute;
-                left: 16px;
+                left: 10px;
                 top: 280px;
             }
             to {
@@ -202,7 +162,7 @@
         @keyframes five_move_out {
             from {
                 position: absolute;
-                left: 332px;
+                left: 330px;
                 top: 280px;
             }
             to {
@@ -215,7 +175,7 @@
         @keyframes six_move_out {
             from {
                 position: absolute;
-                left: 664px;
+                left: 650px;
                 top: 280px;
             }
             to {
@@ -233,14 +193,11 @@
                     box-sizing: border-box;
                     padding: 30px;
                     border-radius: 20px;
+                    transition: all 0.4s;
                 } */
         .content > .selected {
             height: 90px;
-            /*
-            变换所需要的时间
-            transition: all 0.1;
 
-            */
         }
 
         .content > div > .remove {
@@ -267,25 +224,25 @@
 
         /* input{
 
-            width: 500px;
+            width: 200px;
             margin-bottom: 10px;
         } */
         .up_in {
             position: absolute;
 
-            animation: move_in 1s cubic-bezier(0.4, -0.375, 1, 1) forwards;
+            /* transition: all 0.5s cubic-bezier(0.555, -0.375, 0, 1.615); */
+            animation: move_in 0.8s cubic-bezier(0.4, -0.375, 1, 1) forwards;
 
         }
 
         @keyframes move_in {
             from {
-                left: -15%;
+                left: -50%;
             }
-            80% {
-                left: 51%;
-            }
-
             90% {
+                left: 52%;
+            }
+            95% {
                 left: 49%;
             }
             to {
@@ -320,21 +277,6 @@
             z-index: 10;
         }
 
-        .file2 {
-            position: relative;
-            margin-bottom: 20px;
-            display: inline-block;
-            background: #D0EEFF;
-            border: 1px solid #99D3F5;
-            border-radius: 4px;
-            padding: 4px 12px;
-            overflow: hidden;
-            color: #1E88C7;
-            text-decoration: none;
-            text-indent: 0;
-            line-height: 20px;
-        }
-
         .file input {
             position: absolute;
             font-size: 100px;
@@ -350,13 +292,6 @@
             text-decoration: none;
         }
 
-        .file2:hover {
-            background: #AADFFD;
-            border-color: #78C3F3;
-            color: #004974;
-            text-decoration: none;
-        }
-
         .img {
             width: 100%;
             height: 100%;
@@ -365,7 +300,7 @@
 
         .upload {
             height: 30px;
-            margin: 20px auto;
+            margin: 30px auto;
         }
     </style>
     <script type="text/javascript">
@@ -376,7 +311,7 @@
         //上传文件方法
         function UploadFile() {
             var fileObj = document.getElementById("file").files[0]; // js 获取文件对象
-            var url = "http://34.92.52.134:5000" + "/api/v1/upload"; // 接收上传文件的后台地址
+            var url = "http://localhost:5000" + "/api/v1/upload"; // 接收上传文件的后台地址
 
             var form = new FormData(); // FormData 对象
             form.append("file", fileObj); // 文件对象
@@ -441,7 +376,7 @@
                 alert("请输入水印文字！")
             } else if (fname) {
                 var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-                var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/add/watermark";
+                var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark";
                 xmlhttp.open("POST", theUrl, true);
                 xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
                 console.log(JSON.stringify({
@@ -471,7 +406,7 @@
 
         function checkResult(data) {
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-            var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/add/watermark/" + data.Request_id;
+            var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark/" + data.Request_id;
             var download = document.getElementById("download");
             var downBox = document.getElementById("downBox");
             xmlhttp.open("GET", theUrl, true);
@@ -480,7 +415,7 @@
                     var res = JSON.parse(this.responseText);
                     console.log(res)
                     if (res.Status == "PROCESS_SUCCESS") {
-                        var downAPI = "http://34.92.52.134:5000/api/v1/download/";
+                        var downAPI = "http://localhost:5000/api/v1/download/";
                         download.href = downAPI + res.Result.video_name;
                         download.innerHTML = "下载视频";
                         downBox.style.display = "block";
@@ -501,7 +436,7 @@
         function previewIMG() {
             var text = document.getElementById("text").value;
             var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-            var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/add/watermark/preview/" + fname + "|" + text;
+            var theUrl = "http://localhost:5000/api/video/admin/v1.0/add/watermark/preview/" + fname + "|" + text;
             xmlhttp.open("GET", theUrl, true);
             xmlhttp.onload = function () {
                 if (this.readyState == 4 && this.status == 200) {
@@ -556,1531 +491,189 @@
             // if (bspeed == 0) time.innerHTML = '上传已取消';
         }
     </script>
-    </
-
-    style
-
-    >
-    <
-    /
-    head >
-    < body >
-    < article >
-    < div class
-
-    =
-    "content w"
-    >
-    < div style
-
-    =
-    "background-color: #9dc1fa; color: #2e6df6;"
-    class
-
-    =
-    "div1"
-    id
-
-    =
-    "one"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img1"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des1"
-    > 视频隐形水印<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    < div style
-
-    =
-    "background-color: #f7d79c; color: #dd932c;"
-    class
-
-    =
-    "div2"
-    id
-
-    =
-    "two"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img2"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des2"
-    > 视频字幕消除<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    < div style
-
-    =
-    "background-color: #cf97e3;color: #961dc0;"
-    class
-
-    =
-    "div3"
-    id
-
-    =
-    "three"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img3"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des3"
-    > 视频台标消除<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    < div style
-
-    =
-    "background-color: #c3e1b5; color: #65bb3b;"
-    class
-
-    =
-    "div4"
-    id
-
-    =
-    "four"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img4"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des4"
-    > 敬请期待<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    < div style
-
-    =
-    "background-color: #ecaea5; color: #eb553e;"
-    class
-
-    =
-    "div5"
-    id
-
-    =
-    "five"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img5"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des5"
-    > 敬请期待<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    < div style
-
-    =
-    "background-color: #ade6ef; color: #47b7c9;"
-    class
-
-    =
-    "div6"
-    id
-
-    =
-    "six"
-    >
-    < div class
-
-    =
-    "img"
-    id
-
-    =
-    "img6"
-    > < img src
-
-    =
-    "http://34.92.52.134:5000/api/images/watermark.png"
-    alt
-
-    =
-    ""
-    > <
-
-    /
-    div >
-    < h2 id
-
-    =
-    "des6"
-    > 敬请期待<
-
-    /
-    h2 >
-    <
-
-    /
-    div >
-    <
-
-    /
-    div >
-    < div class
-
-    =
-    "hidDiv"
-    id
-
-    =
-    "uploadF"
-    style
-
-    =
-    "visibility: hidden;"
-    >
-    < div class
-
-    =
-    "workspace w"
-    >
-    < img class
-
-    =
-    "img"
-    id
-
-    =
-    "preview"
-    style
-
-    =
-    "display: block;"
-    > <
-
-    /
-    img >
-    < div id
-
-    =
-    "downBox"
-    style
-
-    =
-    "display:none;position: absolute;top: 20px;"
-    > < a
-    class
-
-    =
-    "file"
-    id
-
-    =
-    "download"
-    > <
-
-    /
-    a >
-    <
-
-    /
-    div >
-    <
-
-    /
-    div >
-    < div class
-
-    =
-    "upload w"
-    >
-    < span > 水印文字：<
-
-    /
-    span >
-    < input type
-
-    =
-    "text"
-    name
-
-    =
-    "text"
-    id
-
-    =
-    "text"
-    >
-    < progress id
-
-    =
-    "progressBar"
-    value
-
-    =
-    "0"
-    max
-
-    =
-    "100"
-    style
-
-    =
-    "width:200px;display:none;"
-    > <
-
-    /
-    progress >
-    < span id
-
-    =
-    "percentage"
-    > <
-
-    /
-    span > < span id
-
-    =
-    "time"
-    > <
-
-    /
-    span >
-    < input type
-
-    =
-    "file"
-    name
-
-    =
-    "file"
-    id
-
-    =
-    "file"
-    > < a
-    onclick
-
-    =
-    "UploadFile();"
-    > 上传<
-
-    /
-    a > < a
-    onclick
-
-    =
-    "addWaterMark();"
-    > 添加水印<
-
-    /
-    a >
-    <
-
-    /
-    div >
-    < div class
-
-    =
-    "uploadDiv"
-    >
-    < button class
-
-    =
-    "callback file2"
-    id
-
-    =
-    "back"
-    > 返回<
-
-    /
-    button >
-    <
-
-    /
-    div >
-    <
-
-    /
-    div >
-    <
-
-    /
-    article >
-    < script type
-
-    =
-    "text/javascript"
-    >
-    function
-
-    get
-    (
-    e
-
-    )
-    {
-        return document . getElementById(e)
-    ;
-    }
-    get
-    (
-    'back'
-    )
-    .onclick
-
-    =
-    function
-    (
-    )
-    {
-
-        for (var i = 1
-    ;
-        i < = 6
-    ;
-    i + +
-
-    )
-    {
-
-    if
-    (
-    (
-    get
-    (
-    'img'
-    + i
-
-    )
-    .style.display
-
-    )
-    =
-    =
-    (
-    "none"
-    )
-    )
-    {
-    get
-    (
-    'img'
-    +
-    i
-    )
-    .
-    style
-    .
-    display
-    =
-    "block"
-    ;
-
-
-    switch
-    (
-    i
-
-    )
-    {
-        case 1: get('one') . className = 'one'
-    ;
-        break
-    ;
-        case 2: get('two') . className = 'two'
-    ;
-        break
-    ;
-        case 3: get('three') . className = 'three'
-    ;
-        break
-    ;
-        case 4: get('four') . className = 'four'
-    ;
-        break
-    ;
-        case 5: get('five') . className = 'five'
-    ;
-        break
-    ;
-        case 6: get('six') . className = 'six'
-    ;
-        break
-    ;
-
+</head>
+<body>
+<article>
+    <div class="content w">
+        <div style="background-color: #9dc1fa; color: #2e6df6;" class="div1"
+             id="one">
+            <div class="img" id="img1"><img
+                    src="http://localhost:5000/api/images/watermark.png"
+                    alt="">
+            </div>
+            <h2 id="des1">视频隐形水印</h2>
+        </div>
+        <div style="background-color: #f7d79c; color: #dd932c;" class="div2"
+             id="two">
+            <div class="img" id="img2"><img src="api/images/watermark.png"
+                                            alt="">
+            </div>
+            <h2 id="des2">视频字幕消除</h2>
+        </div>
+        <div style="background-color: #cf97e3;color: #961dc0;" class="div3"
+             id="three">
+            <div class="img" id="img3"><img src="api/images/watermark.png"
+                                            alt="">
+            </div>
+            <h2 id="des3">视频台标消除</h2>
+        </div>
+        <div style="background-color: #c3e1b5; color: #65bb3b;" class="div4"
+             id="four">
+            <div class="img" id="img4"><img src="api/images/watermark.png"
+                                            alt="">
+            </div>
+            <h2 id="des4">敬请期待</h2>
+        </div>
+        <div style="background-color: #ecaea5; color: #eb553e;" class="div5"
+             id="five">
+            <div class="img" id="img5"><img src="api/images/watermark.png"
+                                            alt="">
+            </div>
+            <h2 id="des5">敬请期待</h2>
+        </div>
+        <div style="background-color: #ade6ef; color: #47b7c9;" class="div6"
+             id="six">
+            <div class="img" id="img6"><img src="api/images/watermark.png"
+                                            alt="">
+            </div>
+            <h2 id="des6">敬请期待</h2>
+        </div>
+    </div>
+
+    <div class="hidDiv" id="uploadF" style="visibility: hidden;">
+        <!-- <h3>视频类型</h3>
+        <div class="fileContext">
+            这是你上传的文件内容
+        </div>
+        <div class="uploadDiv">
+
+            <input type="file" accept=".mp4" />
+            <button class="jiexi" id="jiexi">处理</button>
+            <button  class="callback" id="back"><a href="http://34.92.52.134/">返回</a></button>
+        </div> -->
+        <div class="workspace w">
+            <img class="img" id="preview" style="display: block;"></img>
+            <div id="downBox"
+                 style="display:none;position: absolute;top: 20px;"><a
+                    class="file" id="download"></a>
+            </div>
+
+        </div>
+
+        <div class="upload w">
+            <span>水印文字：</span>
+            <input type="text" name="text" id="text">
+            <progress id="progressBar" value="0" max="100"
+                      style="width:200px;display:none;"></progress>
+            <span id="percentage"></span><span id="time"></span>
+            <input type="file" name="file" id="file"> <a
+                onclick="UploadFile();">上传</a> <a
+                onclick="addWaterMark();">添加水印</a>
+        </div>
+    </div>
+</article>
+
+<script type="text/javascript">
+    function get(e) {
+        return document.getElementById(e);
     }
 
-    }
-    else {
+    get('one').onclick = function () {
 
-    switch
-    (
-    i
-
-    )
-    {
-        case 1: get('one') . className = 'one'
-    ;
-        break
-    ;
-        case 2: get('two') . className = 'two'
-    ;
-        break
-    ;
-        case 3: get('three') . className = 'three'
-    ;
-        break
-    ;
-        case 4: get('four') . className = 'four'
-    ;
-        break
-    ;
-        case 5: get('five') . className = 'five'
-    ;
-        break
-    ;
-        case 6: get('six') . className = 'six'
-    ;
-        break
-    ;
-
-    }
-
-    }
-    /
-    /
-    get
-    (
-    'des1'
-    )
-    .className
-
-    =
-    'remove'
-    ;
-
-    get
-    (
-    'uploadF'
-    )
-    .style.visibility
-
-    =
-    'hidden'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .className
-
-    =
-    'hidDiv'
-    ;
-    }
+        get('img1').style.display = "none"
+        get('one').className = 'selected';
+        get('des1').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#9dc1fa";
+        get('uploadF').className = 'hidDiv up_in';
+        // get('one').className = 'one_out';
+        get('two').className = 'two_out';
+        get('three').className = 'three_out';
+        get('four').className = 'four_out';
+        get('five').className = 'five_out';
+        get('six').className = 'six_out';
 
 
     }
+    get('two').onclick = function () {
 
-    get
-    (
-    'one'
-    )
-    .onclick
+        // get('two').className = 'two_out';
 
-    =
-    function
-    (
-    )
-    {
-
-    /
-    /
-    get
-    (
-    'one'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img1'
-    )
-    )
-    ;
-    get
-    (
-    'des1'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-    get
-    (
-    'img1'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#9dc1fa"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    /
-    /
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
-
-
+        get('two').removeChild(get('img2'));
+        get('des2').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#f7d79c";
+        get('uploadF').className = 'hidDiv up_in';
+        get('one').className = 'one_out';
+        get('two').className = 'selected';
+        get('three').className = 'three_out';
+        get('four').className = 'four_out';
+        get('five').className = 'five_out';
+        get('six').className = 'six_out';
     }
-    get
-    (
-    'two'
-    )
-    .onclick
+    get('three').onclick = function () {
 
-    =
-    function
-    (
-    )
-    {
+        // get('three').className = 'three_out';
+        get('three').removeChild(get('img3'));
+        get('des3').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#cf97e3";
 
-    /
-    /
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'des2'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-
-    /
-    /
-    get
-    (
-    'two'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img2'
-    )
-    )
-    ;
-    get
-    (
-    'img2'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#f7d79c"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
+        get('uploadF').className = 'hidDiv up_in';
+        get('one').className = 'one_out';
+        get('two').className = 'two_out';
+        get('three').className = 'selected';
+        get('four').className = 'four_out';
+        get('five').className = 'five_out';
+        get('six').className = 'six_out';
     }
-    get
-    (
-    'three'
-    )
-    .onclick
+    get('four').onclick = function () {
 
-    =
-    function
-    (
-    )
-    {
-
-    /
-    /
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'des3'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-    /
-    /
-    get
-    (
-    'three'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img3'
-    )
-    )
-    ;
-    get
-    (
-    'img3'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#cf97e3"
-    ;
-
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
+        // get('four').className = 'four_out';
+        get('four').removeChild(get('img4'));
+        get('des4').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#c3e1b5";
+        get('uploadF').className = 'hidDiv up_in';
+        get('one').className = 'one_out';
+        get('two').className = 'two_out';
+        get('three').className = 'three_out';
+        get('four').className = 'selected';
+        get('five').className = 'five_out';
+        get('six').className = 'six_out';
     }
-    get
-    (
-    'four'
-    )
-    .onclick
+    get('five').onclick = function () {
 
-    =
-    function
-    (
-    )
-    {
-
-    /
-    /
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'des4'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-    /
-    /
-    get
-    (
-    'four'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img4'
-    )
-    )
-    ;
-    get
-    (
-    'img4'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#c3e1b5"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
+        // get('five').className = 'five_out';
+        get('five').removeChild(get('img5'));
+        get('des5').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#ecaea5";
+        get('uploadF').className = 'hidDiv up_in';
+        get('one').className = 'one_out';
+        get('two').className = 'two_out';
+        get('three').className = 'three_out';
+        get('four').className = 'four_out';
+        get('five').className = 'selected';
+        get('six').className = 'six_out';
     }
-    get
-    (
-    'five'
-    )
-    .onclick
+    get('six').onclick = function () {
 
-    =
-    function
-    (
-    )
-    {
-
-    /
-    /
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'des5'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-    /
-    /
-    get
-    (
-    'five'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img5'
-    )
-    )
-    ;
-    get
-    (
-    'img5'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#ecaea5"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
-    }
-    get
-    (
-    'six'
-    )
-    .onclick
-
-    =
-    function
-    (
-    )
-    {
-
-    /
-    /
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'six_out'
-    ;
-    get
-    (
-    'des6'
-    )
-    .
-    className
-    =
-    'remove'
-    ;
-    /
-    /
-    get
-    (
-    'six'
-    )
-    .
-    removeChild
-    (
-    get
-    (
-    'img6'
-    )
-    )
-    ;
-    get
-    (
-    'img6'
-    )
-    .
-    style
-    .
-    display
-    =
-    "none"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    visibility
-    =
-    'visible'
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    style
-    .
-    backgroundColor
-    =
-    "#ade6ef"
-    ;
-    get
-    (
-    'uploadF'
-    )
-    .
-    className
-    =
-    'hidDiv up_in'
-    ;
-    get
-    (
-    'one'
-    )
-    .
-    className
-    =
-    'one_out'
-    ;
-    get
-    (
-    'two'
-    )
-    .
-    className
-    =
-    'two_out'
-    ;
-    get
-    (
-    'three'
-    )
-    .
-    className
-    =
-    'three_out'
-    ;
-    get
-    (
-    'four'
-    )
-    .
-    className
-    =
-    'four_out'
-    ;
-    get
-    (
-    'five'
-    )
-    .
-    className
-    =
-    'five_out'
-    ;
-    get
-    (
-    'six'
-    )
-    .
-    className
-    =
-    'selected'
-    ;
+        // get('six').className = 'six_out';
+        get('six').removeChild(get('img6'));
+        get('des6').className = 'remove';
+        get('uploadF').style.visibility = 'visible';
+        get('uploadF').style.backgroundColor = "#ade6ef";
+        get('uploadF').className = 'hidDiv up_in';
+        get('one').className = 'one_out';
+        get('two').className = 'two_out';
+        get('three').className = 'three_out';
+        get('four').className = 'four_out';
+        get('five').className = 'five_out';
+        get('six').className = 'selected';
     }
 
+</script>
+</body>
 
-    <
-    /
-    script >
-    <
-
-    /
-    body >
-    <
-
-    /
-    html >
+</html>
