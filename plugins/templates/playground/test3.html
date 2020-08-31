@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>resize</title>
+    <style>
+      .controller-corner {
+        width: 10px;
+        height: 10px;
+        background-color: rgb(170, 214, 255);
+        position: absolute;
+      }
+      .out {
+          position: relative;
+          border: 3px solid red;
+          left: 100px;
+          top: 100px;
+          width: 800px;
+          height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="out" id="out">
+    <div id="box" style="position: absolute; margin: 0; overflow: hidden; border: 1px dashed rgb(0, 0, 0);height: 100px;width:200px;">
+      This is a static template, there is no bundler or bundling involved!
+    </div>
+    </div>
+  </body>
+  <script>
+    function getPxNumber(str) {
+      return parseFloat(str, 10);
+    }
+    function handleMouseDown(onMove, bindUpAndDown) {
+      return function({ target, clientX: x, clientY: y }) {
+        let x0 = x;
+        let y0 = y;
+        function handleMove(e, ...rest) {
+          const { clientX, clientY } = e;
+          e.preventDefault();
+          let detaX = clientX - x0;
+          let detaY = clientY - y0;
+          const outRect = document.getElementById("out");
+          const inRect = document.getElementById("box");
+          const bodyMargin = getPxNumber(getComputedStyle(document.body).margin);
+          
+          if (inRect.offsetLeft < 0) {
+              detaX = detaX > 0 ? detaX : 0;
+          } else if (inRect.offsetLeft+inRect.offsetWidth+bodyMargin > outRect.offsetWidth) {
+              detaX = detaX > 0 ? 0 : detaX;
+          }
+          if (inRect.offsetTop < 0) {
+              detaY = detaY > 0 ? detaY: 0;
+          } else if (inRect.offsetTop+inRect.offsetHeight+bodyMargin > outRect.offsetHeight) {
+              detaY = detaY > 0 ? 0 : detaY;
+          }
+
+          x0 = clientX;
+          y0 = clientY;
+          onMove(target, detaX, detaY, ...rest);
+        }
+        bindUpAndDown(target, handleMove);
+      };
+    }
+    function renderCorner({ width, height }) {
+      const eles = Array.from({ length: 4 }).map(() =>
+        document.createElement("div")
+      );
+      eles.forEach(x => x.classList.add("controller-corner"));
+      const [tl, tr, bl, br] = eles;
+      Object.assign(tl.style, {
+        top: `-5px`,
+        left: `-5px`,
+        cursor: "nw-resize"
+      });
+      Object.assign(tr.style, {
+        top: `-5px`,
+        cursor: "ne-resize",
+        right: `-5px`
+      });
+      Object.assign(bl.style, {
+        bottom: `-5px`,
+        cursor: "sw-resize",
+        left: `-5px`
+      });
+      Object.assign(br.style, {
+        bottom: `-5px`,
+        cursor: "se-resize",
+        right: `-5px`
+      });
+      return { eles };
+    }
+    function createControler(ele, { x, y, width, height }, { minSize = 10 }) {
+      const { eles } = renderCorner({ x, y, width, height });
+      const [tl, tr, bl, br] = eles;
+      const handleControlerMouseDown = handleMouseDown(
+        (target, detaX, detaY, isMoveTargetElement) => {
+          const isLeft = [tl, bl].includes(target);
+          const isTop = [tl, tr].includes(target);
+          const directionLeft = !isLeft ? 1 : -1;
+          const directionTop = !isTop ? 1 : -1;
+          const outRect = document.getElementById("out");
+          const bodyMargin = getPxNumber(getComputedStyle(document.body).margin);
+          let newWidth = getPxNumber(ele._style_.width) + directionLeft * detaX;
+          let newHeight =
+            getPxNumber(ele._style_.height) + directionTop * detaY;
+
+          if (isMoveTargetElement) {
+            const newL = getPxNumber(ele._style_.left);
+            const newT = getPxNumber(ele._style_.top);
+            ele._style_.left = `${newL + detaX}px`;
+            ele._style_.top = `${newT + detaY}px`;
+            return;
+          }
+          newWidth = newWidth < minSize ? minSize : newWidth;
+          newHeight = newHeight < minSize ? minSize : newHeight;
+          newWidth = ele.offsetLeft > 0 ? newWidth : ele.offsetWidth;
+          newHeight = ele.offsetTop > 0 ? newHeight : ele.offsetHeight;
+          if (ele.offsetLeft <= 0) {
+              newWidth = ele.offsetWidth;
+          } else if (ele.offsetLeft+newWidth+bodyMargin >= outRect.offsetWidth) {
+              newWidth = ele.offsetWidth;
+          }
+          if (ele.offsetTop <= 0) {
+              newHeight = ele.offsetHeight;
+          } else if (ele.offsetTop+newHeight+bodyMargin >= outRect.offsetHeight) {
+              newHeight = ele.offsetHeight;
+          }
+
+          let left = getPxNumber(ele._style_.left) - directionLeft * detaX;
+          let top = getPxNumber(ele._style_.top) - directionTop * detaY;
+
+          left = left < 0 ? 0 : left;
+          top = top < 0 ? 0 : top;
+
+
+          ele._style_.width = `${newWidth}px`;
+          ele._style_.height = `${newHeight}px`;
+          ele._style_.left = isLeft ? `${left}px` : ele._style_.left;
+          ele._style_.top = isTop ? `${top}px` : ele._style_.top;
+        },
+        (target, handleMove) => {
+          const handleMoveTargetElement = e => handleMove(e, true);
+          if (eles.includes(target)) {
+            document.addEventListener("mousemove", handleMove);
+          } else {
+            document.addEventListener("mousemove", handleMoveTargetElement);
+          }
+          document.addEventListener("mouseup", ({ target }) => {
+            document.removeEventListener("mousemove", handleMove);
+            document.removeEventListener("mousemove", handleMoveTargetElement);
+          });
+        }
+      );
+      document.addEventListener("mousedown", handleControlerMouseDown);
+      eles.forEach(e => {
+        ele.appendChild(e);
+      });
+      return {
+        removeControler() {
+          eles.forEach(e => {
+            ele.removeChild(e);
+          });
+          document.removeEventListener("mousedown", handleControlerMouseDown);
+        },
+        eles: [...eles, ele]
+      };
+    }
+    function injectController(ele, config) {
+      let { x, y, width, height } = {x:ele.offsetLeft, y:ele.offsetTop, width:ele.offsetWidth, height:ele.offsetHeight};
+      //const outRect = document.getElementById("out").getBoundingClientRect();
+      //const bodyMargin = getPxNumber(getComputedStyle(document.body).margin);
+      const controlWrapper = document.createElement("div");
+      const _style_ = new Proxy(controlWrapper.style, {
+        get(o, key) {
+          let originalStyleValue = Reflect.get(o, key);
+          if (
+            ["width", "height", "left", "top"].includes(key) &&
+            !originalStyleValue
+          ) {
+            originalStyleValue = {
+                width:controlWrapper.offsetWidth,
+                height:controlWrapper.offsetHeight,
+                left:controlWrapper.offsetLeft,
+                top:controlWrapper.offsetTop
+            }[key];
+          }
+          return originalStyleValue;
+        },
+        set(o, key, val) {
+          const pxNumber = getPxNumber(val);
+          if (["left", "top"].includes(key)) {
+            ele.style[key] = `${pxNumber}px`;
+          } else if (["width", "height"].includes(key)) {
+            ele.style[key] = val;
+          }
+          Reflect.set(o, key, val);
+          return val;
+        }
+      });
+      Object.assign(controlWrapper.style, {
+        position: "absolute",
+        width: `${width}px`,
+        height: `${height}px`,
+        top: `${y}px`,
+        left: `${x}px`,
+        cursor: "all-scroll"
+      });
+      controlWrapper._style_ = _style_;
+      const { removeControler, eles } = createControler(
+        controlWrapper,
+        {
+          width,
+          height
+        },
+        config
+      );
+      insertAfter(controlWrapper, ele);
+      return {
+        removeAllControler() {
+          removeControler();
+          ele.parentNode.removeChild(controlWrapper);
+        },
+        eles: [...eles, controlWrapper]
+      };
+    }
+
+    function insertAfter(newNode, referenceNode) {
+        referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+    }
+
+    function injectDragger(ele, config = {}) {
+      let removeDragger;
+      ele.addEventListener("click", () => {
+        if (!removeDragger) {
+          console.log(ele.getBoundingClientRect());
+          const { removeAllControler, eles } = injectController(ele, config);
+          removeDragger = removeAllControler;
+          const handleRemove = ({ target }) => {
+            console.log(target);
+            if (![...eles, ele].includes(target)) {
+              removeDragger && removeDragger();
+              removeDragger = undefined;
+              document.removeEventListener("mousedown", handleRemove);
+            }
+          };
+          document.addEventListener("mousedown", handleRemove);
+        }
+      });
+    }
+    injectDragger(document.querySelector("#box"), { minSize: 30 });
+  </script>
+</html>

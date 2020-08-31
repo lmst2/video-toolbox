@@ -10,13 +10,13 @@ def get_async_job_result():
     res = check_status(request_id)
     if res['Status'] == 'PROCESS_SUCCESS':
         res2 = eval(res['Result'])
-        return api_server.jsonify({'Success': 'true', 'Result': res2})
+        return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': res2})
     elif res['Status'] == 'PROCESS_FAILED':
-        return api_server.jsonify({'Success': 'false',
+        return api_server.jsonify({'Status': 'PROCESS_FAILED',
                                    'Result': {'ErrorCode': res["ErrorCode"],
                                               'ErrorMessage': res[
                                                   "ErrorMessage"]}})
     elif res['Status'] == 'PROCESSING':
-        return api_server.jsonify({'Success': 'false',
+        return api_server.jsonify({'Status': "PROCESSING",
                                    'Result': {'ErrorCode': "",
                                               'ErrorMessage': "PROCESSING"}})

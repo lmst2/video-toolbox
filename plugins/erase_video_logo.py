@@ -32,7 +32,7 @@ def erase_video_logo_helper(video, boxess):
 
 @server.route('/api/video/admin/v1.0/erase/logo', methods=['POST'])
 def erase_video_logo():
-    if not api_server.request.json or 'video' not in api_server.request.json:
+    if not api_server.request.json or 'video_name' not in api_server.request.json:
         abort(400)
     request_id = erase_video_logo_helper(api_server.request.json['video'],
                                          eval(
