@@ -53,3 +53,14 @@ def save_file(url, path):
     t = requests.get(url)
     with open(path, 'wb') as f:
         f.write(t.content)
+
+
+def upload(path):
+    try:
+        ext = path.rsplit('.', 1)[1]
+        url = get_url(path, ext)
+        return url
+    except Exception:
+        upload(path)
+
+

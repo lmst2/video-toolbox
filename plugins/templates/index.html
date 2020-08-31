@@ -885,11 +885,21 @@
 								var res = JSON.parse(this.responseText);
 								var down = document.getElementById("download1"); // 获取元素
 								var downBox = document.getElementById("downBox1");
+								if (res.count > 1) {
+									var text = `由于视频过长，已分成 ${res.count} 小份,`;
+									for (var i = 0; i < res.count; i++) {
+										text.concat(` 视频${i+1}: 处理中`)
+									}
+									down.innerHTML = text;
+									downBox.style.display = "block";
+								} else {
 								down.innerHTML = "处理中"; // 将元素内文本内容改成：处理中
 								downBox.style.display = "block"; //显示这个元素（本来是none不显示）
 								console.log(res) // debug用的
+							}
 								// previewIMG2(); // 生成preview
-								checkResult2(res); // 检查任务有没有完成
+								eraseLogoStatus(res, fname[divName]); // 检查任务有没有完成
+							
 							}
 						}
 						xmlhttp.send(JSON.stringify({"video_name": fname[divName], "boxess": data}));
@@ -901,6 +911,113 @@
 				}
 			}
 
+			function eraseLogoStatus(res, videoName) {
+				var jobId = res.Request_id
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+				var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/erase/logo/"+jobId;
+				var download = document.getElementById("download1");
+				var downBox = document.getElementById("downBox1");
+				xmlhttp.open("GET", theUrl, true);
+				xmlhttp.onload = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var res = JSON.parse(this.responseText);
+						console.log(res);
+						if (res.Status == "PROCESS_SUCCESS") {
+							eraseLogoUpdateInfo(res, videoName);
+						} else if (res.Status == "PROCESS_FAILED") {
+							console.log(res.Result);
+							download.innerHTML = "处理失败: " + res.Result.ErrorMessage;
+							downBox.style.display = "block";
+						} else {
+							setTimeout(eraseLogoStatus, 5000, data);
+						}
+					}
+				}
+				xmlhttp.send(null);
+			}
+
+			function eraseLogoUpdateInfo(res, videoName) {
+				var download = document.getElementById("download1");
+				var downBox = document.getElementById("downBox1");
+				var requestIds = res.Result.request_ids;
+				var text = `由于视频过长，已分成 ${res.count} 小份,`;
+				var i = 1;
+				var pass = [];
+				var urls = [];
+				for (let id of requestIds) {
+					let result = checkResult2(id)
+					if (result.Status == "PROCESS_SUCCESS") {
+						text.concat(` 视频${i}: 处理完成`);
+						pass.push(true);
+						urls.push(result.Result.VideoUrl);
+					} else if (result.Status == "PROCESS_FAILED") {
+						text.concat(` 视频${i}: 处理失败，${result.Result.ErrorMessage}`);
+						pass.push(false);
+					} else {
+						text.concat(` 视频${i}: 处理中`);
+					}
+				}
+				download.innerHTML = text;
+				downBox.style.display = "block";
+				const isTrue = (data) => data;
+				if (!pass.every(isTrue)) {
+					text.concat(" 由于部分视频分段处理失败，无法合成视频，请刷新页面后重试");
+					download.innerHTML = text;
+					downBox.style.display = "block";
+				} else if (pass.length < requestIds.length) {
+					setTimeout(eraseLogoUpdateInfo, 5000, res);
+				} else {
+					if (pass.length == 1) {
+						download.innerHTML = "下载视频";
+						download.href = urls[0];
+						downBox.style.display = "block";
+					} else {
+						eraseLogoProcessVideo(videoName, urls);
+					}
+				}
+			}
+
+			function eraseLogoProcessVideo(fname, urls) {
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+				var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/erase/logo/combine";
+				xmlhttp.open("POST", theUrl, true);
+				xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+				console.log(JSON.stringify({"video_name": fname, "urls": urls}));
+				xmlhttp.onload = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var data = JSON.parse(this.responseText);
+						console.log(data)
+						var jobId = data.Request_id
+					}
+				}
+				xmlhttp.send(JSON.stringify({"video_name": fname, "urls": urls}));
+			}
+
+			function eraseLogoProcessVideoCheckStatus(id) {
+				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+				var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/erase/logo/combine/"+id;
+				var download = document.getElementById("download1");
+				var downBox = document.getElementById("downBox1");
+				xmlhttp.open("GET", theUrl, true);
+				xmlhttp.onload = function () {
+					if (this.readyState == 4 && this.status == 200) {
+						var res = JSON.parse(this.responseText);
+						console.log(res);
+						if (res.Status == "PROCESS_SUCCESS") {
+							download.innerHTML = "下载视频"
+							download.href = "http://34.92.52.134:5000/api/v1/download/"+res.Result.video_name
+						} else if (res.Status == "PROCESS_FAILED") {
+							console.log(res.Result);
+							download.innerHTML = "处理失败: " + res.Result.ErrorMessage;
+							downBox.style.display = "block";
+						} else {
+							setTimeout(eraseLogoStatus, 10000, data);
+						}
+					}
+				}
+				xmlhttp.send(null);
+			}
+
 			function checkResult2(res) {
 				var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
 				var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/job/status";
@@ -908,25 +1025,15 @@
 				var downBox = document.getElementById("downBox1");
 				xmlhttp.open("POST", theUrl, true);
 				xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-				console.log(JSON.stringify(data));
+				console.log(JSON.stringify({"Request_id": res}));
 				xmlhttp.onload = function () {
 					if (this.readyState == 4 && this.status == 200) {
-						var res = JSON.parse(this.responseText);
-						console.log(res)
-						if (res.Status == "PROCESS_SUCCESS") {
-							download.href = res.Result.VideoUrl;
-							download.innerHTML = "下载视频";
-							downBox.style.display = "block";
-						} else if (res.Status == "PROCESS_FAILED") {
-							console.log(res.Result);
-							download.innerHTML = "处理失败: " + res.Result.ErrorMessage;
-							downBox.style.display = "block";
-						} else {
-							setTimeout(checkResult2, 20000, data);
-						}
+						var data = JSON.parse(this.responseText);
+						console.log(data)
+						return data;
 					}
 				}
-				xmlhttp.send(JSON.stringify(data));
+				xmlhttp.send(JSON.stringify({"Request_id": res}));
 			}
 
 			function getPxNumber(str) {
