@@ -2,12 +2,14 @@ import os
 import concurrent.futures
 import random
 import shutil
+import time
 
 from plugins._aliyunUtils import *
 import api_server
 from api_server import abort
 from api_server import logger
 from plugins._cut_video import split_video
+from plugins._cut_video import get_length
 import ffmpy
 
 server = api_server.get_server()
@@ -81,11 +83,12 @@ def erase_video_logo():
     # request_id = erase_video_logo_helper(api_server.request.json['video_name'],
     #                                      eval(
     #                                          api_server.request.json['boxess']))
+    count = get_length(json['video_name'], 60)
     async_result = api_server.apply_async(erase_video_logo_main, (json['video_name'], json['boxess']))
     global tasks
     tasks[job_id] = async_result
 
-    return api_server.jsonify({'Request_id': job_id, 'count': counts[json['video_name']]})
+    return api_server.jsonify({'Request_id': job_id, 'count': count})
 
 
 @server.route('/api/video/admin/v1.0/erase/logo/<request_id>', methods=['GET'])

@@ -7,6 +7,24 @@ from subprocess import check_call, PIPE, Popen
 import shlex
 
 
+def get_length(filename, split_length):
+    length_regexp = 'Duration: (\d{2}):(\d{2}):(\d{2})\.\d+,'
+    re_length = re.compile(length_regexp)
+    p1 = Popen(["ffmpeg", "-i", filename], stdout=PIPE, stderr=PIPE, universal_newlines=True)
+    # get p1.stderr as input
+    output = Popen(["grep", 'Duration'], stdin=p1.stderr, stdout=PIPE, universal_newlines=True)
+    p1.stdout.close()
+    matches = re_length.search(output.stdout.read())
+    video_length = 0
+    if matches:
+        video_length = int(matches.group(1)) * 3600 + \
+                       int(matches.group(2)) * 60 + \
+                       int(matches.group(3))
+
+    split_count = math.ceil(video_length / split_length)
+    return split_count
+
+
 def split_video(filename, split_length):
     # filename, split_length = parse_options()
     try:
