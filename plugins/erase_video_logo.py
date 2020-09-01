@@ -121,10 +121,8 @@ def combine(json):
     process_dir = os.path.join(server.config['UPLOAD_PATH'], vname)
     os.makedirs(process_dir, exist_ok=True)
     files = ''
-    for i in range(json['urls']):
-        file = os.path.join(process_dir, str(i)+'.'+ext)
-        save_file(json['urls'][i], file)
-        files += f'file {file} \n'
+    for file in json['filenames']:
+        files += f'file {file+ext} \n'
     with open(os.path.join(process_dir, 'files.txt')) as f:
         f.write(files)
     ff = ffmpy.FFmpeg(
