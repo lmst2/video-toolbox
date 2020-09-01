@@ -888,7 +888,7 @@
 								if (res.count > 1) {
 									var text = `由于视频过长，已分成 ${res.count} 小份,`;
 									for (var i = 0; i < res.count; i++) {
-										text.concat(` 视频${i+1}: 处理中`)
+										text += ` 视频${i+1}: 处理中`;
 									}
 									down.innerHTML = text;
 									downBox.style.display = "block";
@@ -925,11 +925,10 @@
 						if (res2.Status == "PROCESS_SUCCESS") {
 							eraseLogoUpdateInfo(res2, videoName);
 						} else if (res2.Status == "PROCESS_FAILED") {
-							console.log(res2.Result);
 							download.innerHTML = "处理失败: " + res2.ErrorMessage;
 							downBox.style.display = "block";
 						} else {
-							setTimeout(eraseLogoStatus, 5000, (res, videoName));
+							setTimeout(eraseLogoStatus, 5000, res, videoName);
 						}
 					}
 				}
@@ -947,21 +946,21 @@
 				for (let id of requestIds) {
 					let result = checkResult2(id)
 					if (result.Status == "PROCESS_SUCCESS") {
-						text.concat(` 视频${i}: 处理完成`);
+						text += ` 视频${i}: 处理完成`;
 						pass.push(true);
 						urls.push(result.Result.VideoUrl);
 					} else if (result.Status == "PROCESS_FAILED") {
-						text.concat(` 视频${i}: 处理失败，${result.Result.ErrorMessage}`);
+						text += ` 视频${i}: 处理失败，${result.Result.ErrorMessage}`;
 						pass.push(false);
 					} else {
-						text.concat(` 视频${i}: 处理中`);
+						text += ` 视频${i}: 处理中`;
 					}
 				}
 				download.innerHTML = text;
 				downBox.style.display = "block";
 				const isTrue = (data) => data;
 				if (!pass.every(isTrue)) {
-					text.concat(" 由于部分视频分段处理失败，无法合成视频，请刷新页面后重试");
+					text += " 由于部分视频分段处理失败，无法合成视频，请刷新页面后重试";
 					download.innerHTML = text;
 					downBox.style.display = "block";
 				} else if (pass.length < requestIds.length) {

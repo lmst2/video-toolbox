@@ -8,6 +8,7 @@ server = api_server.get_server()
 def get_async_job_result():
     request_id = api_server.request.json['Request_id']
     res = check_status(request_id)
+    api_server.logger.info(res)
     if res['Status'] == 'PROCESS_SUCCESS':
         res2 = eval(res['Result'])
         return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': res2})
