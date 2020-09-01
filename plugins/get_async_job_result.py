@@ -17,7 +17,7 @@ def get_async_job_result():
                                    'Result': {'ErrorCode': res["ErrorCode"],
                                               'ErrorMessage': res[
                                                   "ErrorMessage"]}})
-    elif res['Status'] == 'PROCESSING':
+    elif res['Status'] == 'PROCESSING' or res['Status'] == 'QUEUING':
         return api_server.jsonify({'Status': "PROCESSING",
                                    'Result': {'ErrorCode': "",
                                               'ErrorMessage': "PROCESSING"}})
