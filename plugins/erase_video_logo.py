@@ -83,7 +83,8 @@ def erase_video_logo():
     # request_id = erase_video_logo_helper(api_server.request.json['video_name'],
     #                                      eval(
     #                                          api_server.request.json['boxess']))
-    count = get_length(json['video_name'], 60)
+    video = os.path.join(server.config['UPLOAD_PATH'], json['video_name'])
+    count = get_length(video, 60)
     async_result = api_server.apply_async(erase_video_logo_main, (json['video_name'], json['boxess']))
     global tasks
     tasks[job_id] = async_result

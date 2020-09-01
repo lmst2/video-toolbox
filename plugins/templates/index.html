@@ -920,16 +920,16 @@
 				xmlhttp.open("GET", theUrl, true);
 				xmlhttp.onload = function () {
 					if (this.readyState == 4 && this.status == 200) {
-						var res = JSON.parse(this.responseText);
-						console.log(res);
-						if (res.Status == "PROCESS_SUCCESS") {
-							eraseLogoUpdateInfo(res, videoName);
-						} else if (res.Status == "PROCESS_FAILED") {
-							console.log(res.Result);
-							download.innerHTML = "处理失败: " + res.Result.ErrorMessage;
+						var res2 = JSON.parse(this.responseText);
+						console.log(res2);
+						if (res2.Status == "PROCESS_SUCCESS") {
+							eraseLogoUpdateInfo(res2, videoName);
+						} else if (res2.Status == "PROCESS_FAILED") {
+							console.log(res2.Result);
+							download.innerHTML = "处理失败: " + res2.ErrorMessage;
 							downBox.style.display = "block";
 						} else {
-							setTimeout(eraseLogoStatus, 5000, data);
+							setTimeout(eraseLogoStatus, 5000, (res, videoName));
 						}
 					}
 				}
@@ -1011,7 +1011,7 @@
 							download.innerHTML = "处理失败: " + res.Result.ErrorMessage;
 							downBox.style.display = "block";
 						} else {
-							setTimeout(eraseLogoStatus, 10000, data);
+							setTimeout(eraseLogoProcessVideoCheckStatus, 10000, id);
 						}
 					}
 				}

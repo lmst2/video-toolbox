@@ -20,6 +20,7 @@ def get_length(filename, split_length):
         video_length = int(matches.group(1)) * 3600 + \
                        int(matches.group(2)) * 60 + \
                        int(matches.group(3))
+        logger.info(video_length)
 
     split_count = math.ceil(video_length / split_length)
     return split_count
