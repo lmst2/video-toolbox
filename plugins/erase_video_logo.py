@@ -29,9 +29,8 @@ def erase_video_logo_helper(video, boxess, count=0):
         dict_response = eval(str(response, encoding='utf-8'))
         return dict_response['RequestId']
     except Exception as e:
-        if count > 100:
-            logger.warn(f'Video {video} have failed {count} times retrying.')
-            logger.warn(e)
+        logger.warn(f'Video {video} have failed {count} times retrying.')
+        logger.warn(e)
         return erase_video_logo_helper(video, boxess, count)
 
 

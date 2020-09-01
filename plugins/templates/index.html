@@ -944,7 +944,7 @@
 				var pass = [];
 				var urls = [];
 				for (let id of requestIds) {
-					let result = checkResult2(id)
+					var result = checkResult2(id);
 					if (result.Status == "PROCESS_SUCCESS") {
 						text += ` 视频${i}: 处理完成`;
 						pass.push(true);
@@ -1022,7 +1022,7 @@
 				var theUrl = "http://34.92.52.134:5000/api/video/admin/v1.0/job/status";
 				var download = document.getElementById("download1");
 				var downBox = document.getElementById("downBox1");
-				xmlhttp.open("POST", theUrl, true);
+				xmlhttp.open("POST", theUrl);
 				xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 				console.log(JSON.stringify({"Request_id": res}));
 				xmlhttp.onload = function () {
