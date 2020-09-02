@@ -124,7 +124,7 @@ def combine(video_name, filenames):
     os.makedirs(process_dir, exist_ok=True)
     files = ''
     for file in filenames:
-        files += f'file {file+ext} \n'
+        files += f'file {file+"."+ext} \n'
     with open(os.path.join(process_dir, 'files.txt'), 'w') as f:
         f.write(files)
     ff = ffmpy.FFmpeg(
