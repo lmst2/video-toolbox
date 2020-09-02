@@ -112,18 +112,18 @@ def get_erase_video_logo_result(request_id):
 def combine_video():
     json = api_server.request.json
     job_id = str(hash(json['video_name'] + str(random.randint(0, 1000))))
-    async_result = api_server.apply_async(combine, (json))
+    async_result = api_server.apply_async(combine, (json['video_name'], json['filenames']))
     global tasks
     tasks[job_id] = async_result
     return api_server.jsonify({'Request_id': job_id})
 
 
-def combine(json):
-    vname, ext = json['video_name'].rsplit('.', 1)
+def combine(video_name, filenames):
+    vname, ext = video_name.rsplit('.', 1)
     process_dir = os.path.join(server.config['UPLOAD_PATH'], vname)
     os.makedirs(process_dir, exist_ok=True)
     files = ''
-    for file in json['filenames']:
+    for file in filenames:
         files += f'file {file+ext} \n'
     with open(os.path.join(process_dir, 'files.txt')) as f:
         f.write(files)
