@@ -1,5 +1,6 @@
 import time
 import requests
+from api_server import logger
 from aliyunsdkcore.client import AcsClient
 from aliyunsdkcore.request import CommonRequest
 from aliyunsdkcore.acs_exception.exceptions import ClientException
@@ -28,14 +29,18 @@ def get_url(path, ext):
 
 
 def check_status(request_id):
-    request = GetAsyncJobResultRequest()
-    request.set_accept_format('json')
+    try:
+        request = GetAsyncJobResultRequest()
+        request.set_accept_format('json')
 
-    request.set_JobId(request_id)
+        request.set_JobId(request_id)
 
-    response = client.do_action_with_exception(request)
-    dict_response = eval(str(response, encoding='utf-8'))
-    return dict_response['Data']
+        response = client.do_action_with_exception(request)
+        dict_response = eval(str(response, encoding='utf-8'))
+        return dict_response['Data']
+    except Exception as e:
+        logger.error(e)
+        return {'Status': 'PROCESSING'}
 
 
 def get_async_job_result(request_id):
