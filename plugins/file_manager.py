@@ -43,7 +43,7 @@ def upload():
         if allowed_file(file.filename):
             filename = hashlib.md5(
                 file.filename.encode() +
-                bytes([random.randint(0, 256)])).hexdigest() + '.' \
+                bytes([random.randint(0, 255)])).hexdigest() + '.' \
                        + file.filename.rsplit('.', 1)[1]
             file.save(
                 os.path.join(server.config['UPLOAD_PATH'],
