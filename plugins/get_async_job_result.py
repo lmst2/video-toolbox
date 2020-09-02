@@ -4,6 +4,7 @@ from plugins._aliyunUtils import *
 import api_server
 
 server = api_server.get_server()
+cache = {}
 
 
 @server.route('/api/video/admin/v1.0/job/status', methods=['POST'])
@@ -13,12 +14,14 @@ def get_async_job_result():
     vname, ext = video_name.rsplit('.', 1)
     res = check_status(request_id)
     api_server.logger.info(res)
-    if res['Status'] == 'PROCESS_SUCCESS':
+    if res['Status'] == 'PROCESS_SUCCESS' or request_id in cache:
         res2 = eval(res['Result'])
         path = os.path.join(server.config['UPLOAD_PATH'], vname, request_id+ext)
         os.makedirs(os.path.join(server.config['UPLOAD_PATH'], vname), exist_ok=True)
         api_server.apply_async(save_file, (res2['VideoUrl'], path))
-        return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': res2})
+        if request_id not in cache:
+            cache[request_id] = res2
+        return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': cache[request_id]})
     elif res['Status'] == 'PROCESS_FAILED':
         return api_server.jsonify({'Status': 'PROCESS_FAILED',
                                    'Result': {'ErrorCode': res["ErrorCode"],
