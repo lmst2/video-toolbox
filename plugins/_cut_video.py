@@ -23,6 +23,7 @@ def get_length(filename, split_length):
         logger.info(video_length)
 
     split_count = math.ceil(video_length / split_length)
+    logger.info(f"split into {split_count} videos")
     return split_count
 
 
