@@ -12,7 +12,9 @@ def get_async_job_result():
     request_id = api_server.request.json['Request_id']
     video_name = api_server.request.json['video_name']
     vname, ext = video_name.rsplit('.', 1)
-    res = check_status(request_id)
+    res = cache.get(request_id, None)
+    if not res:
+        res = check_status(request_id)
     api_server.logger.info(res)
     if res['Status'] == 'PROCESS_SUCCESS' or request_id in cache:
         res2 = eval(res['Result'])
