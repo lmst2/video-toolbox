@@ -22,7 +22,7 @@ def get_async_job_result():
         os.makedirs(os.path.join(server.config['UPLOAD_PATH'], vname), exist_ok=True)
         api_server.apply_async(save_file, (res2['VideoUrl'], path))
         if request_id not in cache:
-            cache[request_id] = res2
+            cache[request_id] = res
         return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': cache[request_id]})
     elif res['Status'] == 'PROCESS_FAILED':
         return api_server.jsonify({'Status': 'PROCESS_FAILED',
