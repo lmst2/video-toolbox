@@ -432,7 +432,7 @@ function eraseLogo(divName) {
                     var res = JSON.parse(this.responseText);
                     var down = document.getElementById("download1"); // 获取元素
                     var downBox = document.getElementById("downBox1");
-                    if (res.count > 1) {
+                    if (res.count >= 2) {
                         var text = `由于视频过长，已分成 ${res.count} 小份,`;
                         for (var i = 0; i < res.count; i++) {
                             text += ` 视频${i+1}: 处理中`;
@@ -491,6 +491,10 @@ function eraseLogoUpdateInfo(res, videoName, count) {
     var pass = [];
     var filenames = [];
     var result = "";
+
+    if (count == 1) {
+        text = "处理中"
+    }
     for (let id of requestIds) {
         result = checkResult2(id, videoName);
         if (result.Status == "PROCESS_SUCCESS") {
@@ -661,6 +665,10 @@ function eraseSubtitleUpdateInfo(res, videoName, count) {
     var pass = [];
     var filenames = [];
     var result = "";
+
+    if (count == 1) {
+        text = "处理中"
+    }
     for (let id of requestIds) {
         result = checkResult3(id, videoName);
         if (result.Status == "PROCESS_SUCCESS") {

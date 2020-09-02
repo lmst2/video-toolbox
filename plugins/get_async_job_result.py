@@ -24,7 +24,7 @@ def get_async_job_result():
         api_server.jobs[request_id] = async_res
         if request_id not in cache:
             cache[request_id] = res
-        return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': cache[request_id]})
+        return api_server.jsonify({'Status': 'PROCESS_SUCCESS', 'Result': res2})
     elif res['Status'] == 'PROCESS_FAILED':
         return api_server.jsonify({'Status': 'PROCESS_FAILED',
                                    'Result': {'ErrorCode': res["ErrorCode"],
