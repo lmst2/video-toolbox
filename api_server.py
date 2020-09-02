@@ -15,6 +15,8 @@ from flask_cors import cross_origin
 from functools import wraps
 from multiprocessing.pool import ApplyResult, ThreadPool
 
+jobs = {}
+
 # class ApiServer:
 #
 #     def __init__(self, host, port, **options):

@@ -118,12 +118,19 @@ def combine_video():
     return api_server.jsonify({'Request_id': job_id})
 
 
+def till_ready(job, count=0):
+    if job.ready():
+        return
+    till_ready(job, count+1)
+
+
 def combine(video_name, filenames):
     vname, ext = video_name.rsplit('.', 1)
     process_dir = os.path.join(server.config['UPLOAD_PATH'], vname)
     os.makedirs(process_dir, exist_ok=True)
     files = ''
     for file in filenames:
+        till_ready(api_server.jobs[file])
         files += f'file {file+"."+ext} \n'
     with open(os.path.join(process_dir, 'files.txt'), 'w') as f:
         f.write(files)
