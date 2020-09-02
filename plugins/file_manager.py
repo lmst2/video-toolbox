@@ -13,9 +13,11 @@ server = api_server.get_server()
 
 upload_dir = os.path.abspath(r'static/videos')
 img_dir = os.path.abspath(r'static/images')
+js_dir = os.path.abspath(r'static/js')
 server.config[
     'UPLOAD_PATH'] = upload_dir  # '/home/wujiachen2016/video-toolbox/static/videos'
 server.config['IMG_PATH'] = img_dir
+server.config['JS_PATH'] = js_dir
 server.config['ALLOWED_EXTENSIONS'] = ['MP4', 'MKV', 'MOV']
 
 
@@ -60,3 +62,8 @@ def download_file(filename):
 def images(image):
     return api_server.send_from_directory(server.config['IMG_PATH'],
                                           image)
+
+
+@server.route('/api/js/<path:js_file>', methods=['GET'])
+def js(js_file):
+    return  api_server.send_from_directory(server.config['JS_PATH'], js_file)
