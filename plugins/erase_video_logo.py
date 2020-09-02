@@ -112,7 +112,7 @@ def get_erase_video_logo_result(request_id):
 def combine_video():
     json = api_server.request.json
     job_id = str(hash(json['video_name'] + str(random.randint(0, 1000))))
-    async_result = api_server.apply_async(combine, json)
+    async_result = api_server.apply_async(combine, (json))
     global tasks
     tasks[job_id] = async_result
     return api_server.jsonify({'Request_id': job_id})
