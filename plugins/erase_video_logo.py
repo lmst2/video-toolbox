@@ -19,6 +19,7 @@ counts = {}
 
 def erase_video_logo_helper(video, boxess, count=0):
     try:
+        time.sleep(random.randint(0.002, 0.213))
         request = EraseVideoLogoRequest()
         request.set_accept_format('json')
 
@@ -31,6 +32,7 @@ def erase_video_logo_helper(video, boxess, count=0):
     except Exception as e:
         logger.warn(f'Video {video} have failed {count} times retrying.')
         logger.warn(e)
+        count += 1
         return erase_video_logo_helper(video, boxess, count)
 
 
