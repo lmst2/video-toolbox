@@ -121,6 +121,7 @@ def combine_video():
 def till_ready(job, count=0):
     if job.ready():
         return
+    time.sleep(3)
     till_ready(job, count+1)
 
 
