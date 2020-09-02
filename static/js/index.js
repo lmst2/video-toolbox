@@ -196,6 +196,7 @@ function UploadFile(divName) {
                 percentageDiv.innerHTML = '完成';
                 fname[this.divName] = data.filename;
                 console.log(fname);
+                getPreview(preview, data.filename)
             } else {
                 alert("上传失败！");
                 progressBar.style.display = "none";
@@ -245,6 +246,23 @@ function UploadFile(divName) {
 // 	downBox.style.display = "none";
 
 // }
+
+function getPreview(ele, videoName) {
+    var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
+        var theUrl = "http://34.92.52.134:5000/api/v1/preview/"+videoName;
+        xmlhttp.open("GET", theUrl, true);
+        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xmlhttp.onload = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var res = JSON.parse(this.responseText);
+                if (res.success) {
+                    ele.href = res.url;
+                    ele.style.display = "block";
+                }
+            }
+        }
+        xmlhttp.send(null);
+}
 
 //上传失败
 function uploadFailed(evt) {
