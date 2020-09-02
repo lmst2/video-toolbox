@@ -19,7 +19,7 @@ counts = {}
 
 def erase_video_logo_helper(video, boxess, count=0):
     try:
-        time.sleep(random.randint(0.002, 0.213))
+        time.sleep(random.randint(2, 211)/1000)
         request = EraseVideoLogoRequest()
         request.set_accept_format('json')
 
