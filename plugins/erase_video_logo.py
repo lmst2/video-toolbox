@@ -102,6 +102,9 @@ def get_erase_video_logo_result(request_id):
             {'Status': 'PROCESS_FAILED', 'ErrorMessage': 'No such request id'})
     if task.ready():
         result = task.get()
+        if isinstance(result, dict):
+            return api_server.jsonify(
+                {'Status': 'PROCESS_FAILED', 'ErrorMessage': result['msg']})
         return api_server.jsonify(
             {'Status': 'PROCESS_SUCCESS', 'Result': {'request_ids': result}})
     else:
