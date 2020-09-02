@@ -18,7 +18,7 @@ def get_async_job_result():
     api_server.logger.info(res)
     if res['Status'] == 'PROCESS_SUCCESS' or request_id in cache:
         res2 = eval(res['Result'])
-        path = os.path.join(server.config['UPLOAD_PATH'], vname, request_id+ext)
+        path = os.path.join(server.config['UPLOAD_PATH'], vname, request_id+'.'+ext)
         os.makedirs(os.path.join(server.config['UPLOAD_PATH'], vname), exist_ok=True)
         api_server.apply_async(save_file, (res2['VideoUrl'], path))
         if request_id not in cache:
