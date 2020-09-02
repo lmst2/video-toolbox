@@ -9,7 +9,7 @@ server = api_server.get_server()
 @server.route('/api/video/admin/v1.0/job/status', methods=['POST'])
 def get_async_job_result():
     request_id = api_server.request.json['Request_id']
-    video_name = api_server.request.json['Video_name']
+    video_name = api_server.request.json['video_name']
     vname, ext = video_name.rsplit('.', 1)
     res = check_status(request_id)
     api_server.logger.info(res)
