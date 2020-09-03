@@ -196,7 +196,7 @@ function UploadFile(divName) {
                 percentageDiv.innerHTML = '完成';
                 fname[this.divName] = data.filename;
                 console.log(fname);
-                getPreview(preview, data.filename)
+                getPreview(preview, data.filename);
             } else {
                 alert("上传失败！");
                 progressBar.style.display = "none";
@@ -256,7 +256,7 @@ function getPreview(ele, videoName) {
             if (this.readyState == 4 && this.status == 200) {
                 var res = JSON.parse(this.responseText);
                 if (res.success) {
-                    ele.href = res.url;
+                    ele.src = res.url;
                     ele.style.display = "block";
                 }
             }
