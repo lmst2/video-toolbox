@@ -14,7 +14,7 @@ server = api_server.get_server()
 
 @server.route('/api/v1/preview/<video_name>', methods=['GET'])
 def get_preview(video_name):
-    length = get_length(video_name, 1)
+    length = get_length(os.path.join(server.config['UPLOAD_PATH'], video_name), 1)
     frame_num = random.randint(1, length)
     ff = ffmpy.FFmpeg(
         inputs={os.path.join(server.config['UPLOAD_PATH'], video_name): ''},
