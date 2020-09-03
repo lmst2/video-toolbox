@@ -196,7 +196,7 @@ function UploadFile(divName) {
                 percentageDiv.innerHTML = '完成';
                 fname[this.divName] = data.filename;
                 console.log(fname);
-                getPreview(preview, data.filename);
+                getPreview(preview, download, data.filename);
             } else {
                 alert("上传失败！");
                 progressBar.style.display = "none";
@@ -247,21 +247,25 @@ function UploadFile(divName) {
 
 // }
 
-function getPreview(ele, videoName) {
+function getPreview(ele, ele2, videoName) {
+    ele2.innerHTML = "请稍等"
+    ele2.style.display = "block";
     var xmlhttp = new XMLHttpRequest();   // new HttpRequest instance
-        var theUrl = "http://34.92.52.134:5000/api/v1/preview/"+videoName;
-        xmlhttp.open("GET", theUrl, true);
-        xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xmlhttp.onload = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                var res = JSON.parse(this.responseText);
-                if (res.success) {
-                    ele.src = res.url;
-                    ele.style.display = "block";
-                }
+    var theUrl = "http://34.92.52.134:5000/api/v1/preview/"+videoName;
+    xmlhttp.open("GET", theUrl, true);
+    xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xmlhttp.ele2 = ele2;
+    xmlhttp.onload = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var res = JSON.parse(this.responseText);
+            if (res.success) {
+                ele.src = res.url;
+                ele.style.display = "block";
+                this.ele2.style.display = "none";
             }
         }
-        xmlhttp.send(null);
+    }
+    xmlhttp.send(null);
 }
 
 //上传失败
