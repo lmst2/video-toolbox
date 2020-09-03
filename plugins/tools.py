@@ -22,4 +22,4 @@ def get_preview(video_name):
     )
     ff.run()
     fname = video_name.rsplit('.', 1)[0]+'.png'
-    return jsonify({'success': True, 'url': 'http://34.92.52.134:5000/api/v1/download/'+fname})
+    return jsonify({'success': True, 'url': 'http://localhost:5000/api/v1/download/'+fname})
