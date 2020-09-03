@@ -25,6 +25,7 @@ def get_url(path, ext):
     try:
         return file_utils.get_oss_url(path, ext, True)
     except Exception:
+        time.sleep(1)
         return get_url(path, ext)
 
 
